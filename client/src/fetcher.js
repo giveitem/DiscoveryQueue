@@ -11,7 +11,7 @@ const getSearchSongs = async (name) => {
 const getRandSongs = async () => {
 
 
-    var attrs = ["valence", "danceability", "energy", "key", "tempo"]
+    var attrs = ["valence", "danceability", "energy", "acousticness", "tempo"]
     var resultArray = []
     attrs.forEach(attr => {
         var highRes = await fetch(`http://${config.server_host}:${config.server_port}/random?attr=${attr}&endpoint=high`, {
