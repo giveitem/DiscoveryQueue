@@ -1,0 +1,9 @@
+{
+    "rds_host": "127.0.0.1",
+    "rds_port": "3306",
+    "rds_user": "root",
+    "rds_password" : "bazooka486",
+    "rds_db": "project",
+    "server_host": "127.0.0.1",
+    "server_port":"8080"
+}
