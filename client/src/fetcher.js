@@ -10,20 +10,27 @@ const getSearchSongs = async (name) => {
 }
 const getRandSongs = async () => {
 
-
     var attrs = ["valence", "danceability", "energy", "acousticness", "tempo"]
     var resultArray = []
     attrs.forEach(attr => {
-        var highRes = await fetch(`http://${config.server_host}:${config.server_port}/random?attr=${attr}&endpoint=high`, {
+        fetch(`http://${config.server_host}:${config.server_port}/random?attr=${attr}&endpoint=high`, {
             method: 'GET',
-        });
-        var lowRes = await fetch(`http://${config.server_host}:${config.server_port}/random?attr=${attr}&endpoint=low`, {
+        }).then((res) => {
+            res.json().then((res) => {
+                //console.log(res)
+                resultArray.push(res)
+            })
+        })
+        fetch(`http://${config.server_host}:${config.server_port}/random?attr=${attr}&endpoint=low`, {
             method: 'GET',
+        }).then((res) => {
+            res.json().then((res) => {
+                //console.log(res)
+                resultArray.push(res)
+            })
         });
-        var highRes = await highRes.json();
-        var lowRes = await lowRes.json();
-        resultArray.push((highRes, lowRes));
-    })
+
+    });
     return resultArray;
 }
-export { getSearchSongs }
+export { getSearchSongs, getRandSongs }

@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import HomePage from './pages/HomePage';
+import Head2Head from './pages/Head2Head';
 
 import reportWebVitals from './reportWebVitals';
 //import 'bootstrap/dist/css/bootstrap.min.css';
@@ -11,8 +12,8 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
 
   <React.StrictMode>
-    <HomePage />
-
+    {/* <HomePage /> */}
+    <Head2Head />
   </React.StrictMode>
 );
 
