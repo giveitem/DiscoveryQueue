@@ -22,10 +22,11 @@ const Head2Head = (props) => {
     }, [counter]);
 
     const handleClick = (highlow) => {
-        if (counter < 5) {
+        if (counter < 4) {
             setCounter(counter + 1);
             setQuery([...query, highlow]);
         } else {
+            setCounter(counter + 1);
             getRandResults(query).then((res) => {
                 setSongsResults(res);
                 console.log(res);
@@ -38,7 +39,7 @@ const Head2Head = (props) => {
         <div className='head2head' >
             <h1>head2head</h1>
             <div>{attrs[counter]}</div>
-            {songPair1[0] &&
+            {counter < 5 && songPair1[0] &&
                 <div>
                     <div key={songPair1[0].id}>
                         <div> {songPair1[0].name} </div>
