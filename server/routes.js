@@ -54,7 +54,7 @@ async function random(req, res) {
     switch (req.query.attr) {
         case "valence":
             if (req.query.endpoint == "high") {
-                var highQuery = "SELECT name, id FROM Tracks WHERE valence > 0.8 AND valence < 0.9 ORDER BY RAND() LIMIT 1;";
+                var highQuery = "SELECT name, id, preview_url FROM Tracks WHERE valence > 0.8 AND valence < 0.9 ORDER BY RAND() LIMIT 1;";
                 connection.query(highQuery, function (error, results, fields) {
                     if (error) {
                         console.log(error)
@@ -65,7 +65,7 @@ async function random(req, res) {
                     }
                 });
             } else {
-                var lowQuery = "SELECT name, id FROM Tracks WHERE valence > 0.1 AND valence < 0.2 ORDER BY RAND() LIMIT 1;";
+                var lowQuery = "SELECT name, id, preview_url FROM Tracks WHERE valence > 0.1 AND valence < 0.2 ORDER BY RAND() LIMIT 1;";
                 connection.query(lowQuery, function (error, results, fields) {
                     if (error) {
                         console.log(error)
@@ -79,7 +79,7 @@ async function random(req, res) {
             break;
         case "danceability":
             if (req.query.endpoint == "high") {
-                var highQuery = "SELECT name, id FROM Tracks WHERE danceability > 0.8 AND danceability < 0.9 ORDER BY RAND() LIMIT 1;";
+                var highQuery = "SELECT name, id, preview_url FROM Tracks WHERE danceability > 0.8 AND danceability < 0.9 ORDER BY RAND() LIMIT 1;";
                 connection.query(highQuery, function (error, results, fields) {
                     if (error) {
                         console.log(error)
@@ -91,7 +91,7 @@ async function random(req, res) {
                     }
                 });
             } else {
-                var lowQuery = "SELECT name, id FROM Tracks WHERE danceability > 0.2 AND danceability < 0.4 ORDER BY RAND() LIMIT 1;";
+                var lowQuery = "SELECT name, id, preview_url FROM Tracks WHERE danceability > 0.2 AND danceability < 0.4 ORDER BY RAND() LIMIT 1;";
                 connection.query(lowQuery, function (error, results, fields) {
                     if (error) {
                         console.log(error)
@@ -105,7 +105,7 @@ async function random(req, res) {
             break;
         case "energy":
             if (req.query.endpoint == "high") {
-                var highQuery = "SELECT name, id FROM Tracks WHERE energy > 0.8 AND energy < 0.9 ORDER BY RAND() LIMIT 1;";
+                var highQuery = "SELECT name, id, preview_url FROM Tracks WHERE energy > 0.8 AND energy < 0.9 ORDER BY RAND() LIMIT 1;";
                 connection.query(highQuery, function (error, results, fields) {
                     if (error) {
                         console.log(error)
@@ -116,7 +116,7 @@ async function random(req, res) {
                     }
                 });
             } else {
-                var lowQuery = "SELECT name, id FROM Tracks WHERE energy > 0.2 AND energy < 0.4 ORDER BY RAND() LIMIT 1;";
+                var lowQuery = "SELECT name, id, preview_url FROM Tracks WHERE energy > 0.2 AND energy < 0.4 ORDER BY RAND() LIMIT 1;";
                 connection.query(lowQuery, function (error, results, fields) {
                     if (error) {
                         console.log(error)
@@ -131,7 +131,7 @@ async function random(req, res) {
 
         case "acousticness":
             if (req.query.endpoint == "high") {
-                var highQuery = "SELECT name, id FROM Tracks WHERE acousticness > 0.88 AND acousticness < 0.98 ORDER BY RAND() LIMIT 1;";
+                var highQuery = "SELECT name, id, preview_url FROM Tracks WHERE acousticness > 0.88 AND acousticness < 0.98 ORDER BY RAND() LIMIT 1;";
                 connection.query(highQuery, function (error, results, fields) {
                     if (error) {
                         console.log(error)
@@ -142,7 +142,7 @@ async function random(req, res) {
                     }
                 });
             } else {
-                var lowQuery = "SELECT name, id FROM Tracks WHERE acousticness > 0.14 AND acousticness < 0.2 ORDER BY RAND() LIMIT 1;";
+                var lowQuery = "SELECT name, id, preview_url FROM Tracks WHERE acousticness > 0.14 AND acousticness < 0.2 ORDER BY RAND() LIMIT 1;";
                 connection.query(lowQuery, function (error, results, fields) {
                     if (error) {
                         console.log(error)
@@ -156,7 +156,7 @@ async function random(req, res) {
             break;
         case "tempo":
             if (req.query.endpoint == "high") {
-                var highQuery = "SELECT name, id FROM Tracks WHERE tempo > 150 AND tempo < 170 ORDER BY RAND() LIMIT 1;";
+                var highQuery = "SELECT name, id, preview_url FROM Tracks WHERE tempo > 150 AND tempo < 170 ORDER BY RAND() LIMIT 1;";
                 connection.query(highQuery, function (error, results, fields) {
                     if (error) {
                         console.log(error)
@@ -167,7 +167,7 @@ async function random(req, res) {
                     }
                 });
             } else {
-                var lowQuery = "SELECT name, id FROM Tracks WHERE  tempo > 83 AND tempo < 89 ORDER BY RAND() LIMIT 1;";
+                var lowQuery = "SELECT name, id, preview_url FROM Tracks WHERE  tempo > 83 AND tempo < 89 ORDER BY RAND() LIMIT 1;";
                 connection.query(lowQuery, function (error, results, fields) {
                     if (error) {
                         console.log(error)
@@ -186,7 +186,7 @@ async function random(req, res) {
 
 }
 async function sendRandom(req, res) {
-    var base = "SELECT name, id FROM Tracks WHERE ";
+    var base = "SELECT name, id,preview_url FROM Tracks WHERE ";
 
     //valence
     if (req.query.valence == "high") {

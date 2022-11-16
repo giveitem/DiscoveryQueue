@@ -1,23 +1,19 @@
 import logo from './logo.svg';
 import './App.css';
+import Five4Five from './pages/Five4Five';
+import Head2Head from './pages/Head2Head';
+import HomePage from './pages/HomePage';
+import { BrowserRouter, Route } from 'react-router-dom';
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <BrowserRouter>
+        <Route path="/Five4Five" component={Five4Five} />
+        <Route path="/Head2Head" component={Head2Head} />
+
+        <Route exact path="/" component={HomePage} />
+      </BrowserRouter>
     </div>
   );
 }
