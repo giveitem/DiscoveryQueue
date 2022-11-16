@@ -1,37 +1,66 @@
 import { useState, useEffect, useRef } from 'react';
-import { getRandSongs } from '../fetcher.js'
+import { getRandSongs, getRandResults } from '../fetcher.js'
 
 const Head2Head = (props) => {
     const [selectedSongs, setSelected] = useState([]);
-    const [songsResults, setSongsResults] = useState([]);
+    const [songsResults, setSongsResults] = useState(null);
     const [songPair1, setSongPair1] = useState([]);
-    const [songPair2, setSongPair2] = useState([]);
-
+    const [counter, setCounter] = useState(0);
+    const [query, setQuery] = useState([]);
     let attrs = ["valence", "danceability", "energy", "acousticness", "tempo"];
 
     let rand1 = Math.floor(Math.random() * songPair1.length);
-    let rand2 = Math.floor(Math.random() * songPair2.length);
-    let temp = undefined;
+
+
 
 
     useEffect(() => {
-        getRandSongs(attrs[0]).then((res) => {
+        getRandSongs(attrs[counter]).then((res) => {
             setSongPair1(res);
         })
-    }, []);
+        console.log("fired");
+    }, [counter]);
 
-    console.log(songPair1);
+    const handleClick = (highlow) => {
+        if (counter < 5) {
+            setCounter(counter + 1);
+            setQuery([...query, highlow]);
+        } else {
+            getRandResults(query).then((res) => {
+                setSongsResults(res);
+                console.log(res);
+            });
+        }
+    }
 
+    console.log(query);
     return (
         <div className='head2head' >
             <h1>head2head</h1>
-            {songPair1 && songPair1.map(song => (
-                <div key={song.id}>
-                    <div> {song.name} </div>
-                    <button>Select</button>
+            <div>{attrs[counter]}</div>
+            {songPair1[0] &&
+                <div>
+                    <div key={songPair1[0].id}>
+                        <div> {songPair1[0].name} </div>
+                        <button onClick={() => handleClick("high")}>Select</button>
+                    </div>
+                    <div key={songPair1[1].id}>
+                        <div> {songPair1[1].name} </div>
+                        <button onClick={() => handleClick("low")}>Select</button>
+                    </div>
+                </div >
+            }
+            {songsResults &&
+                <div>
+                    {songsResults.map(song => (
+                        <div key={song.id}>
+                            <div> {song.name} </div>
+                        </div>
+                    ))}
                 </div>
-            ))}
-        </div>
+            }
+
+        </div >
     )
 
 

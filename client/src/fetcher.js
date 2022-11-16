@@ -9,17 +9,51 @@ const getSearchSongs = async (name) => {
     return ans;
 }
 const getRandSongs = async (attr) => {
-    var resultArray = []
+    var songArray = []
 
     const highres = await fetch(`http://${config.server_host}:${config.server_port}/random?attr=${attr}&endpoint=high`);
     const highans = await highres.json();
-    resultArray.push(highans.results[0]);
+    songArray.push(highans.results[0]);
 
     const lowres = await fetch(`http://${config.server_host}:${config.server_port}/random?attr=${attr}&endpoint=low`);
     const lowans = await lowres.json();
-    resultArray.push(lowans.results[0]);
+    songArray.push(lowans.results[0]);
 
 
-    return resultArray;
+    return songArray;
 }
-export { getSearchSongs, getRandSongs }
+const getRandResults = async (query) => {
+    var resultArray = []
+    let qString = `http://${config.server_host}:${config.server_port}/getRandom?`;
+    if (query[0] == "high") {
+        qString += `valence=high&`;
+    } else {
+        qString += `valence=low&`;
+    }
+    if (query[1] == "high") {
+        qString += `danceability=high&`;
+    } else {
+        qString += `danceability=low&`;
+    }
+    if (query[2] == "high") {
+        qString += `energy=high&`;
+    } else {
+        qString += `energy=low&`;
+    }
+    if (query[3] == "high") {
+        qString += `acousticness=high&`;
+    } else {
+        qString += `acousticness=low&`;
+    }
+    if (query[4] == "high") {
+        qString += `tempo=high`;
+    } else {
+        qString += `tempo=low`;
+    }
+    console.log(qString)
+    const res = await fetch(qString);
+    const ans = await res.json();
+    return ans.results;
+
+}
+export { getSearchSongs, getRandSongs, getRandResults }

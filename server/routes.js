@@ -185,10 +185,55 @@ async function random(req, res) {
     }
 
 }
+async function sendRandom(req, res) {
+    var base = "SELECT name, id FROM Tracks WHERE ";
 
+    //valence
+    if (req.query.valence == "high") {
+        base += "valence > 0.7 AND valence < 0.95 AND ";
+    } else {
+        base += "valence > 0.15 AND valence < 0.32 AND ";
+    }
+    //danceability
+    if (req.query.danceability == "high") {
+        base += "danceability > 0.7 AND danceability < 0.95 AND ";
+    } else {
+        base += "danceability > 0.3 AND danceability < 0.5 AND ";
+    }
+    //energy
+    if (req.query.energy == "high") {
+        base += "energy > 0.83 AND energy < 0.95 AND ";
+
+    } else {
+        base += "energy > 0.2 AND energy < 0.4 AND ";
+    }
+    //acousticness
+    if (req.query.acousticness == "high") {
+        base += "acousticness > 0.7 AND acousticness < 0.9 AND ";
+    } else {
+        base += "acousticness > 0.2 AND acousticness < 0.4 AND ";
+    }
+
+    //tempo
+    if (req.query.tempo == "high") {
+        base += "tempo > 140 AND tempo < 178 ORDER BY RAND() LIMIT 5;";
+    } else {
+        base += "tempo > 74 AND tempo < 88 ORDER BY RAND() LIMIT 5;";
+    }
+    connection.query(base, function (error, results, fields) {
+        if (error) {
+            console.log(error)
+            res.json({ error: error })
+        }
+        else if (results) {
+            res.json({ results: results })
+        }
+    });
+}
 
 module.exports = {
     hello,
     random,
-    search
+    search,
+    sendRandom
 }
