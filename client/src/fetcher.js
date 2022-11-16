@@ -23,29 +23,28 @@ const getRandSongs = async (attr) => {
     return songArray;
 }
 const getRandResults = async (query) => {
-    var resultArray = []
     let qString = `http://${config.server_host}:${config.server_port}/getRandom?`;
-    if (query[0] == "high") {
+    if (query[0] === "high") {
         qString += `valence=high&`;
     } else {
         qString += `valence=low&`;
     }
-    if (query[1] == "high") {
+    if (query[1] === "high") {
         qString += `danceability=high&`;
     } else {
         qString += `danceability=low&`;
     }
-    if (query[2] == "high") {
+    if (query[2] === "high") {
         qString += `energy=high&`;
     } else {
         qString += `energy=low&`;
     }
-    if (query[3] == "high") {
+    if (query[3] === "high") {
         qString += `acousticness=high&`;
     } else {
         qString += `acousticness=low&`;
     }
-    if (query[4] == "high") {
+    if (query[4] === "high") {
         qString += `tempo=high`;
     } else {
         qString += `tempo=low`;

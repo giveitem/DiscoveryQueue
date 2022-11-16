@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState } from 'react';
 import './Five4Five.css';
 import { getSearchSongs } from '../fetcher.js'
 

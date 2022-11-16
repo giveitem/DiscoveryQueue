@@ -1,15 +1,12 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
 import { getRandSongs, getRandResults } from '../fetcher.js'
 
 const Head2Head = (props) => {
-    const [selectedSongs, setSelected] = useState([]);
     const [songsResults, setSongsResults] = useState(null);
     const [songPair1, setSongPair1] = useState([]);
     const [counter, setCounter] = useState(0);
     const [query, setQuery] = useState([]);
     let attrs = ["valence", "danceability", "energy", "acousticness", "tempo"];
-
-    let rand1 = Math.floor(Math.random() * songPair1.length);
 
 
 
