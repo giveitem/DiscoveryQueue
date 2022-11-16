@@ -40,13 +40,16 @@ const Head2Head = (props) => {
                 <div>
                     <div key={songPair1[0].id}>
                         <div> {songPair1[0].name} </div>
-                        <a href={songPair1[0].preview_url}>Preview</a>
-
+                        <audio controls>
+                            <source src={songPair1[0].preview_url} type="audio/mpeg" />
+                        </audio>
                         <button onClick={() => handleClick("high")}>Select</button>
                     </div>
                     <div key={songPair1[1].id}>
                         <div> {songPair1[1].name} </div>
-                        <a href={songPair1[1].preview_url}>Preview</a>
+                        <audio controls>
+                            <source src={songPair1[1].preview_url} type="audio/mpeg" />
+                        </audio>
                         <button onClick={() => handleClick("low")}>Select</button>
                     </div>
                 </div >
@@ -55,7 +58,9 @@ const Head2Head = (props) => {
                 <div>
                     {songsResults.map(song => (
                         <div key={song.id}>
-                            <a href={song.preview_url}>Preview</a>
+                            <audio controls>
+                                <source src={song.preview_url} type="audio/mpeg" />
+                            </audio>
                             <div> {song.name} </div>
                         </div>
                     ))}
