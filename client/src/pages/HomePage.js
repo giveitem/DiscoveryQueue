@@ -8,6 +8,7 @@ const HomePage = (props) => {
   const [search, setSearch] = useState('');
   const [loadingSongs, setLoadingSongs] = useState(false);
 
+
   const addSong = (song) => {
     if (!selectedSongs.includes(song)) {
       setSelected([...selectedSongs, song]);
