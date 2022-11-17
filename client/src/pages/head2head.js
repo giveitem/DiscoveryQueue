@@ -34,7 +34,7 @@ const Head2Head = (props) => {
     console.log(query);
     return (
         <div className='head2head' >
-            <h1>head2head</h1>
+            <h1>Head2Head</h1>
             <div>{attrs[counter]}</div>
             {counter < 5 && songPair1[0] &&
                 <div>
