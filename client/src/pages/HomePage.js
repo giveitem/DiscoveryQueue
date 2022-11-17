@@ -11,8 +11,14 @@ function HomePage() {
 
       </p>
       <Link to="/Head2Head">Head2Head</Link>
-    </div>
+      <p>
 
+      </p>
+      <Link to="/Explore">Explore</Link>
+      <p>   </p>
+      <img src="https://i.kym-cdn.com/photos/images/newsfeed/001/018/899/936.jpg" alt="cat" width="500" height="600">
+      </img>
+    </div>
   )
 }
 
