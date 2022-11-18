@@ -5,10 +5,11 @@ import Head2Head from './pages/Head2Head';
 import Explore from './pages/Explore';
 import HomePage from './pages/HomePage';
 import { BrowserRouter, Route } from 'react-router-dom';
-
+import BasicExample from './components/BasicExample';
 function App() {
   return (
     <div className="App">
+      <BasicExample />
       <BrowserRouter>
         <Route path="/Five4Five" component={Five4Five} />
         <Route path="/Head2Head" component={Head2Head} />
