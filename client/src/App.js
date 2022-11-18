@@ -6,6 +6,7 @@ import Explore from './pages/Explore';
 import HomePage from './pages/HomePage';
 import { BrowserRouter, Route } from 'react-router-dom';
 import BasicExample from './components/BasicExample';
+import Footer from './components/Footer';
 function App() {
   return (
     <div className="App">
@@ -16,6 +17,7 @@ function App() {
         <Route path="/Explore" component={Explore} />
         <Route exact path="/" component={HomePage} />
       </BrowserRouter>
+      <Footer />
     </div>
   );
 }
