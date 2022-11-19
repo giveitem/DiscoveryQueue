@@ -20,6 +20,18 @@ const columns = [
         label: 'Artist',
         minWidth: 170,
         align: 'right',
+    },
+    {
+        id: 'album',
+        label: 'Album',
+        minWidth: 170,
+        align: 'right',
+    },
+    {
+        id: 'date',
+        label: 'Release Date',
+        minWidth: 170,
+        align: 'right',
     }
 
 ];
