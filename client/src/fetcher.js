@@ -1,7 +1,15 @@
 import config from './config.json'
 
-const getSearchSongs = async (name) => {
-    var res = await fetch(`http://${config.server_host}:${config.server_port}/search?name=${name}`, {
+const getSearchSongs = async (songName, artistName) => {
+    let basic = `http://${config.server_host}:${config.server_port}/search/?`;
+    if (songName !== "") {
+        basic += `songName=${songName}`;
+    }
+    if (artistName !== "") {
+        basic += `&artistName=${artistName}`;
+    }
+    console.log(basic);
+    var res = await fetch(basic, {
         method: 'GET',
     })
     var ans = await res.json()

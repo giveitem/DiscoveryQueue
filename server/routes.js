@@ -33,7 +33,15 @@ async function hello(req, res) {
 
 
 async function search(req, res) {
-    let query = "WITH tracks_alb (track_name, alb_id) as     (SELECT name, album_id from tracks WHERE name LIKE '%" + req.query.name + "%'), tracks_alb_art_id (track_name, art_id) as     (SELECT tracks_alb.track_name, artist_id from tracks_alb join albums on tracks_alb.alb_id = albums.id),     tracks_alb_art_na (track_name, gen_id) as     (SELECT tracks_alb_art_id.track_name, artists.name from tracks_alb_art_id join artists on tracks_alb_art_id.art_id = artists.id) select track_name as name, gen_id as artists_name from tracks_alb_art_na; ";
+    console.log(req.query)
+    let query = "";
+    if (req.query.songName && !req.query.artistName) {
+        query += "WITH tracks_alb (track_name, alb_id) as     (SELECT name, album_id from tracks WHERE name LIKE '%" + req.query.songName + "%'), tracks_alb_art_id (track_name, art_id) as     (SELECT tracks_alb.track_name, artist_id from tracks_alb join albums on tracks_alb.alb_id = albums.id),     tracks_alb_art_na (track_name, gen_id) as     (SELECT tracks_alb_art_id.track_name, artists.name from tracks_alb_art_id join artists on tracks_alb_art_id.art_id = artists.id) select track_name as name, gen_id as artists_name from tracks_alb_art_na; ";
+    } else if (!req.query.songName && req.query.artistName) {
+        query += "WITH artist_ids (track_id, art_id, art_name) as         (SELECT track_id, id,name from artists WHERE name LIKE '%" + req.query.artistName + "%')  SELECT tracks.name as name, artist_ids.art_name as artists_name from artist_ids join tracks on artist_ids.track_id = tracks.id;";
+    } else if (req.query.songName && req.query.artistName) {
+        query += "WITH artist_ids (track_id, art_id, art_name) as         (SELECT track_id, id,name from artists WHERE name LIKE '%" + req.query.artistName + "%')  SELECT tracks.name as name, artist_ids.art_name as artists_name from artist_ids join tracks on artist_ids.track_id = tracks.id WHERE tracks.name LIKE '%" + req.query.songName + "%';";
+    }
     // let base = "SELECT name, id,artists_id FROM Tracks WHERE name LIKE '%" + req.query.name + "%';";
     // let page = req.query.page ? req.query.page : 1;
     // let pagesize = req.query.pagesize ? req.query.pagesize : 10;

@@ -28,6 +28,7 @@ const Five4Five = (props) => {
     const [selectedSongs, setSelected] = useState([]);
     const [songsResults, setSongsResults] = useState([]);
     const [search, setSearch] = useState('');
+    const [searchA, setSearchA] = useState('');
     const [loadingSongs, setLoadingSongs] = useState(false);
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(10);
@@ -50,7 +51,7 @@ const Five4Five = (props) => {
 
     const updateSearchResults = () => {
         setLoadingSongs(true);
-        getSearchSongs(search)
+        getSearchSongs(search, searchA)
 
             .then(res => {
                 setSongsResults(res.results);
@@ -63,8 +64,10 @@ const Five4Five = (props) => {
             <h1>Five4Five</h1>
 
             <input type='text' placeholder="Song Name" onChange={(event) => setSearch(event.target.value)} />
-            <button onClick={() => updateSearchResults()}>Search</button>
 
+            <input type='text' placeholder="Artist Name" onChange={(event) => setSearchA(event.target.value)} />
+
+            <button onClick={() => updateSearchResults()}>Search</button>
 
             <div className='Selected'>
                 {selectedSongs.map(song => (
