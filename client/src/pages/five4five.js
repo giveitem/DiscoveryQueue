@@ -12,6 +12,8 @@ import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
 
 
+import Stack from '@mui/material/Stack';
+import Button from '@mui/material/Button';
 
 const columns = [
     { id: 'name', label: 'Track Name', minWidth: 170 },
@@ -30,6 +32,12 @@ const columns = [
     {
         id: 'date',
         label: 'Release Date',
+        minWidth: 170,
+        align: 'right',
+    },
+    {
+        id: 'select',
+        label: 'Select',
         minWidth: 170,
         align: 'right',
     }
@@ -85,7 +93,7 @@ const Five4Five = (props) => {
                 {selectedSongs.map(song => (
                     <div key={song.id}>
                         <div>{song.name}</div>
-                        <button onClick={() => setSelected(selectedSongs.filter(s => s.id !== song.id))}>Remove</button>
+                        <button onClick={() => setSelected(selectedSongs.filter(s => s.t_id !== song.t_id))}>Remove</button>
                     </div>
                 ))}
             </div>
@@ -131,6 +139,11 @@ const Five4Five = (props) => {
                                                     </TableCell>
                                                 );
                                             })}
+                                            <TableCell key={columns[4].id} align={columns[4].align}>
+                                                <Button variant="contained" color="success" onClick={() => addSong(row)}>
+                                                    Add Song
+                                                </Button>
+                                            </TableCell>
                                         </TableRow>
                                     );
                                 })}
@@ -146,7 +159,7 @@ const Five4Five = (props) => {
                     onPageChange={handleChangePage}
                     onRowsPerPageChange={handleChangeRowsPerPage}
                 />
-            </Paper>
+            </Paper >
         </div >
     );
 }
