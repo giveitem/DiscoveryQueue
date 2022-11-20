@@ -63,4 +63,7 @@ const getRandResults = async (query) => {
     return ans.results;
 
 }
-export { getSearchSongs, getRandSongs, getRandResults }
+const getBarResults = async (query) => {
+
+}
+export { getSearchSongs, getRandSongs, getRandResults, getBarResults }

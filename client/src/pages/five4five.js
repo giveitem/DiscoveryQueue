@@ -34,12 +34,6 @@ const columns = [
         label: 'Release Date',
         minWidth: 170,
         align: 'right',
-    },
-    {
-        id: 'select',
-        label: 'Select',
-        minWidth: 170,
-        align: 'right',
     }
 
 ];
@@ -108,7 +102,7 @@ const Five4Five = (props) => {
                 ))}
             </div> */}
             <Paper sx={{ width: '100%', overflow: 'hidden' }}>
-                <TableContainer sx={{ maxHeight: 440 }}>
+                <TableContainer sx={{ maxHeight: 800 }}>
                     <Table stickyHeader aria-label="sticky table">
                         <TableHead>
                             <TableRow>
@@ -121,6 +115,8 @@ const Five4Five = (props) => {
                                         {column.label}
                                     </TableCell>
                                 ))}
+                                <TableCell>
+                                </TableCell>
                             </TableRow>
                         </TableHead>
                         <TableBody>
@@ -139,7 +135,7 @@ const Five4Five = (props) => {
                                                     </TableCell>
                                                 );
                                             })}
-                                            <TableCell key={columns[4].id} align={columns[4].align}>
+                                            <TableCell key={columns[3].id} align={columns[3].align}>
                                                 <Button variant="contained" color="success" onClick={() => addSong(row)}>
                                                     Add Song
                                                 </Button>
