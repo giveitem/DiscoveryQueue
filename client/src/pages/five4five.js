@@ -46,6 +46,7 @@ const Five4Five = (props) => {
     const [loadingSongs, setLoadingSongs] = useState(false);
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(10);
+    const [counter, setCounter] = useState(0);
 
     const handleChangePage = (event, newPage) => {
         setPage(newPage);
@@ -57,16 +58,22 @@ const Five4Five = (props) => {
     };
 
     const addSong = (song) => {
-        if (!selectedSongs.includes(song)) {
-            setSelected([...selectedSongs, song]);
+        if (counter < 5) {
+            if (!selectedSongs.includes(song)) {
+                setSelected([...selectedSongs, song]);
+                setCounter(counter + 1);
+            }
         }
+    }
+    const deleteSong = (song) => {
+        setSelected(selectedSongs.filter(s => s.t_id !== song.t_id));
+        setCounter(counter - 1);
     }
 
 
     const updateSearchResults = () => {
         setLoadingSongs(true);
         getSearchSongs(search, searchA)
-
             .then(res => {
                 setSongsResults(res.results);
                 setLoadingSongs(false);
@@ -84,12 +91,19 @@ const Five4Five = (props) => {
             <button onClick={() => updateSearchResults()}>Search</button>
 
             <div className='Selected'>
+                <h2>Selected Songs</h2>
+                <h3>{counter}/5 </h3>
                 {selectedSongs.map(song => (
                     <div key={song.id}>
-                        <div>{song.name}</div>
-                        <button onClick={() => setSelected(selectedSongs.filter(s => s.t_id !== song.t_id))}>Remove</button>
+                        <div>{song.name} - {song.artists_name}
+                            <Button onClick={() => deleteSong(song)}>
+                                Remove
+                            </Button>
+                        </div>
+
                     </div>
                 ))}
+                {counter === 5 && <Button variant="contained" color="primary">Create Playlist</Button>}
             </div>
 
 
