@@ -27,7 +27,7 @@ const Head2Head = (props) => {
         } else {
             setCounter(counter + 1);
             getRandResults(query).then((res) => {
-                setSongsResults(res);
+                setSongsResults(res.results);
                 console.log(res);
             });
         }
@@ -64,11 +64,11 @@ const Head2Head = (props) => {
             {songsResults &&
                 <div>
                     {songsResults.map(song => (
-                        <div key={song.id}>
+                        <div key={song.id} className='result'>
+                            <div > {song.name} </div>
                             <audio controls>
                                 <source src={song.preview_url} type="audio/mpeg" />
                             </audio>
-                            <div> {song.name} </div>
                         </div>
                     ))}
                 </div>
