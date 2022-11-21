@@ -58,12 +58,27 @@ const getRandResults = async (query) => {
         qString += `tempo=low`;
     }
     console.log(qString)
+    var res = await fetch(qString, {
+        method: 'GET',
+    });
+    var ans = await res.json();
+    return ans;
+
+}
+const getBarResults = async (tempoValue, danceValue, energyValue, valenceValue) => {
+    let qString = `http://${config.server_host}:${config.server_port}/getBars?`;
+    qString += `tempoLow=${tempoValue[0]}&`;
+    qString += `danceLow=${danceValue[0] / 100}&`;
+    qString += `energyLow=${energyValue[0] / 100}&`;
+    qString += `valenceLow=${valenceValue[0] / 100}&`;
+    qString += `tempoHigh=${tempoValue[1]}&`;
+    qString += `danceHigh=${danceValue[1] / 100}&`;
+    qString += `energyHigh=${energyValue[1] / 100}&`;
+    qString += `valenceHigh=${valenceValue[1] / 100}`;
+
+    console.log(qString);
     const res = await fetch(qString);
     const ans = await res.json();
     return ans.results;
-
-}
-const getBarResults = async (query) => {
-
 }
 export { getSearchSongs, getRandSongs, getRandResults, getBarResults }

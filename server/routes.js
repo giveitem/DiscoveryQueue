@@ -242,9 +242,28 @@ async function sendRandom(req, res) {
     });
 }
 
+async function getBar(req, res) {
+    var base = 'SELECT name, id,preview_url FROM Tracks WHERE ';
+
+    const { tempoLow, tempoHigh, valenceLow, valenceHigh, danceLow, danceHigh, energyLow, energyHigh } = req.query;
+
+    base += `tempo > ${tempoLow} AND tempo < ${tempoHigh} AND valence > ${valenceLow} AND valence < ${valenceHigh} AND danceability > ${danceLow} AND danceability < ${danceHigh} AND energy > ${energyLow} AND energy < ${energyHigh};`;
+
+    connection.query(base, function (error, results, fields) {
+        if (error) {
+            console.log(error)
+            res.json({ error: error })
+        }
+        else if (results) {
+            console.log(base);
+            res.json({ results: results })
+        }
+    });
+}
 module.exports = {
     hello,
     random,
     search,
-    sendRandom
+    sendRandom,
+    getBar
 }
