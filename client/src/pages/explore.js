@@ -8,12 +8,13 @@ import Grid from '@mui/material/Unstable_Grid2';
 import Button from '@mui/material/Button';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
+import TableCell, { tableCellClasses } from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
 import { getBarResults } from '../fetcher.js'
+
 
 const Item = styled(Paper)(({ theme }) => ({
     backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
@@ -25,7 +26,25 @@ const Item = styled(Paper)(({ theme }) => ({
 function valuetext(value) {
     return `${value}°C`;
 }
+const StyledTableCell = styled(TableCell)(({ theme }) => ({
+    [`&.${tableCellClasses.head}`]: {
+        backgroundColor: '#c034eb',
+        color: theme.palette.common.white,
+    },
+    [`&.${tableCellClasses.body}`]: {
+        fontSize: 14,
+    },
+}));
 
+const StyledTableRow = styled(TableRow)(({ theme }) => ({
+    '&:nth-of-type(odd)': {
+        backgroundColor: theme.palette.action.hover,
+    },
+    // hide last border
+    '&:last-child td, &:last-child th': {
+        border: 0,
+    },
+}));
 export default function Explore() {
     const [tempoValue, setTempoValue] = React.useState([30, 50]);
     const [danceValue, setDanceValue] = React.useState([0, 100]);
@@ -150,16 +169,14 @@ export default function Explore() {
                         <TableHead>
                             <TableRow>
                                 {columns.map((column) => (
-                                    <TableCell
+                                    <StyledTableCell
                                         key={column.id}
                                         align={column.align}
                                         style={{ minWidth: column.minWidth }}
                                     >
                                         {column.label}
-                                    </TableCell>
+                                    </StyledTableCell>
                                 ))}
-                                <TableCell>
-                                </TableCell>
                             </TableRow>
                         </TableHead>
                         {songsResults && <TableBody>

@@ -3,9 +3,10 @@ import './Five4Five.css';
 import { getSearchSongs } from '../fetcher.js'
 import * as React from 'react';
 import Paper from '@mui/material/Paper';
+import { styled } from '@mui/material/styles';
+import TableCell, { tableCellClasses } from '@mui/material/TableCell';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TablePagination from '@mui/material/TablePagination';
@@ -47,6 +48,30 @@ const Five4Five = (props) => {
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(10);
     const [counter, setCounter] = useState(0);
+    const StyledTableCell = styled(TableCell)(({ theme }) => ({
+        [`&.${tableCellClasses.head}`]: {
+            backgroundColor: '#c034eb',
+            color: theme.palette.common.white,
+        },
+        [`&.${tableCellClasses.body}`]: {
+            fontSize: 14,
+        },
+    }));
+
+    const StyledTableRow = styled(TableRow)(({ theme }) => ({
+        '&:nth-of-type(odd)': {
+            backgroundColor: theme.palette.action.hover,
+        },
+        // hide last border
+        '&:last-child td, &:last-child th': {
+            border: 0,
+        },
+    }));
+
+
+
+
+
 
     const handleChangePage = (event, newPage) => {
         setPage(newPage);
@@ -118,19 +143,19 @@ const Five4Five = (props) => {
             <Paper sx={{ width: '100%', overflow: 'hidden' }}>
                 <TableContainer sx={{ maxHeight: 800 }}>
                     <Table stickyHeader aria-label="sticky table">
-                        <TableHead>
+                        <TableHead >
                             <TableRow>
                                 {columns.map((column) => (
-                                    <TableCell
+                                    <StyledTableCell
                                         key={column.id}
                                         align={column.align}
                                         style={{ minWidth: column.minWidth }}
                                     >
                                         {column.label}
-                                    </TableCell>
+                                    </StyledTableCell>
                                 ))}
-                                <TableCell>
-                                </TableCell>
+                                <StyledTableCell>
+                                </StyledTableCell>
                             </TableRow>
                         </TableHead>
                         <TableBody>

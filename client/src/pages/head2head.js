@@ -1,5 +1,7 @@
 import { useState, useEffect } from 'react';
 import { getRandSongs, getRandResults } from '../fetcher.js'
+import Button from '@mui/material/Button';
+import './Head2Head.css';
 
 const Head2Head = (props) => {
     const [songsResults, setSongsResults] = useState(null);
@@ -35,22 +37,27 @@ const Head2Head = (props) => {
     return (
         <div className='head2head' >
             <h1>Head2Head</h1>
-            <div>{attrs[counter]}</div>
+            <h4>{attrs[counter]}</h4>
             {counter < 5 && songPair1[0] &&
                 <div>
-                    <div key={songPair1[0].id}>
-                        <div> {songPair1[0].name} </div>
-                        <audio controls>
-                            <source src={songPair1[0].preview_url} type="audio/mpeg" />
-                        </audio>
-                        <button onClick={() => handleClick("high")}>Select</button>
+                    <div className="eachSong">
+                        <div key={songPair1[0].id} >
+                            <div> {songPair1[0].name} </div>
+                            <audio controls>
+                                <source src={songPair1[0].preview_url} type="audio/mpeg" />
+                            </audio>
+                        </div>
+                        <Button onClick={() => handleClick("high")}>Select</Button>
                     </div>
-                    <div key={songPair1[1].id}>
-                        <div> {songPair1[1].name} </div>
-                        <audio controls>
-                            <source src={songPair1[1].preview_url} type="audio/mpeg" />
-                        </audio>
-                        <button onClick={() => handleClick("low")}>Select</button>
+
+                    <div className="eachSong">
+                        <div key={songPair1[1].id} >
+                            <div> {songPair1[1].name} </div>
+                            <audio controls>
+                                <source src={songPair1[1].preview_url} type="audio/mpeg" />
+                            </audio>
+                        </div>
+                        <Button onClick={() => handleClick("low")}>Select</Button>
                     </div>
                 </div >
             }
