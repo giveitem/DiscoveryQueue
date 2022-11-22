@@ -60,6 +60,19 @@ async function search(req, res) {
         }
     });
 }
+async function getSearchResult(req, res) {
+    var query = `WITH inital(id) as (select top_song from tracks where id = '${req.query.songName}') SELECT inital.id as id, tracks.name as name from inital join tracks on inital.id = tracks.id;`
+    console.log(query)
+    connection.query(query, function (error, results, fields) {
+        if (error) {
+            console.log(error)
+            res.json({ error: error })
+        }
+        else if (results) {
+            res.json({ results: results })
+        }
+    });
+}
 
 async function random(req, res) {
     switch (req.query.attr) {
@@ -265,5 +278,6 @@ module.exports = {
     random,
     search,
     sendRandom,
-    getBar
+    getBar,
+    getSearchResult
 }

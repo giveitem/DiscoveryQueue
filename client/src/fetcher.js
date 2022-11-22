@@ -16,6 +16,14 @@ const getSearchSongs = async (songName, artistName) => {
     console.log(ans)
     return ans;
 }
+const getSongResults = async (songNames) => {
+    let qString = `http://${config.server_host}:${config.server_port}/getSongs?songName=${songNames}`;
+    console.log(qString);
+    const res = await fetch(qString);
+    const ans = await res.json();
+    // console.log(ans.results);
+    return ans.results;
+}
 const getRandSongs = async (attr) => {
     var songArray = []
 
@@ -81,4 +89,4 @@ const getBarResults = async (tempoValue, danceValue, energyValue, valenceValue) 
     const ans = await res.json();
     return ans.results;
 }
-export { getSearchSongs, getRandSongs, getRandResults, getBarResults }
+export { getSearchSongs, getRandSongs, getRandResults, getBarResults, getSongResults }

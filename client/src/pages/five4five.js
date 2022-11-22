@@ -1,6 +1,6 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import './Five4Five.css';
-import { getSearchSongs } from '../fetcher.js'
+import { getSearchSongs, getSongResults } from '../fetcher.js'
 import * as React from 'react';
 import Paper from '@mui/material/Paper';
 import { styled } from '@mui/material/styles';
@@ -48,6 +48,9 @@ const Five4Five = (props) => {
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(10);
     const [counter, setCounter] = useState(0);
+
+    const [songMatchedResults, setSongMatchedResults] = useState([]);
+
     const StyledTableCell = styled(TableCell)(({ theme }) => ({
         [`&.${tableCellClasses.head}`]: {
             backgroundColor: '#c034eb',
@@ -70,7 +73,9 @@ const Five4Five = (props) => {
 
 
 
-
+    function timeout(delay) {
+        return new Promise(res => setTimeout(res, delay));
+    }
 
 
     const handleChangePage = (event, newPage) => {
@@ -105,6 +110,33 @@ const Five4Five = (props) => {
                 console.log(songsResults);
             });
     };
+
+
+
+
+
+
+    const getResults = () => {
+
+        let songIds = selectedSongs.map(song => song.t_id);
+        let selected = [];
+        for (let i = 0; i < 5; i++) {
+            getSongResults(songIds[i]).then(res => {
+
+                console.log(res);
+                console.log(songMatchedResults);
+                selected.push(res[0]);
+            });
+        }
+        console.log(selected);
+        timeout(50).then(res => {
+            setSongMatchedResults(selected);
+        }
+        )
+
+    }
+
+
     return (
         <div className='HomePage' >
             <h1>Five4Five</h1>
@@ -128,8 +160,21 @@ const Five4Five = (props) => {
 
                     </div>
                 ))}
-                {counter === 5 && <Button variant="contained" color="primary">Create Playlist</Button>}
+                {counter === 5 && <Button variant="contained" color="primary" onClick={() => getResults()}>Create Playlist</Button>}
             </div>
+
+            {songMatchedResults.length !== 0 &&
+                <div className='Selected'>
+                    <h2>Your Playlist</h2>
+                    {songMatchedResults.map(song => (
+                        <div key={song.id}>
+                            <div>{song.name} - {song.artists_name}
+                                <a href={`https://open.spotify.com/track/${song.id}`} class="btn  btn-link" target="_blank">Go Listen on Spotify</a>
+                            </div>
+                        </div>
+                    ))}
+                </div>}
+
 
 
             {/* <div className='Songs'>

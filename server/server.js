@@ -17,6 +17,7 @@ app.get('/search', routes.search);
 app.get('/random', routes.random);
 app.get('/getRandom', routes.sendRandom);
 app.get('/getBars', routes.getBar);
+app.get('/getSongs', routes.getSearchResult);
 
 app.listen(config.server_port, () => {
     console.log(`Server running at http://${config.server_host}:${config.server_port}/`);
