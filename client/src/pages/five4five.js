@@ -114,7 +114,11 @@ const Five4Five = (props) => {
 
 
 
-
+    const reset = () => {
+        setSelected([]);
+        setSongMatchedResults([]);
+        setCounter(0);
+    }
 
     const getResults = () => {
 
@@ -173,6 +177,7 @@ const Five4Five = (props) => {
                             </div>
                         </div>
                     ))}
+                    <Button variant="contained" color="primary" onClick={() => reset()}>Reset</Button>
                 </div>}
 
 
