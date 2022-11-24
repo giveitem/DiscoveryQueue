@@ -2,7 +2,7 @@ import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
-import logo from '../public/logo.jpg';
+import white from '../public/dq_white.png';
 
 function BasicExample() {
     return (
@@ -10,9 +10,9 @@ function BasicExample() {
             <Container>
                 <Navbar.Brand href="/">
                     <img
-                        src={logo}
-                        width="150"
-                        height="40"
+                        src={white}
+                        // width="150"
+                        height="70"
                         className="d-inline-block align-top"
                         alt="logo"
                     /></Navbar.Brand>
