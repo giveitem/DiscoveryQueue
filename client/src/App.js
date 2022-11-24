@@ -1,8 +1,8 @@
 import logo from './logo.svg';
 import './App.css';
-import Five4Five from './pages/five4five';
-import Head2Head from './pages/head2head';
-import Explore from './pages/explore';
+import Five4Five from './pages/Five4Five';
+import Head2Head from './pages/Head2Head';
+import Explore from './pages/Explore';
 import HomePage from './pages/HomePage';
 import { BrowserRouter, Route } from 'react-router-dom';
 import BasicExample from './components/BasicExample';
@@ -11,18 +11,18 @@ function App() {
   return (
     <div className="App">
       <div className="Header">
-      <BasicExample />
+        <BasicExample />
       </div>
       <div className="Main">
-      <BrowserRouter>
-        <Route path="/Five4Five" component={Five4Five} />
-        <Route path="/Head2Head" component={Head2Head} />
-        <Route path="/Explore" component={Explore} />
-        <Route exact path="/" component={HomePage} />
-      </BrowserRouter>
+        <BrowserRouter>
+          <Route path="/Five4Five" component={Five4Five} />
+          <Route path="/Head2Head" component={Head2Head} />
+          <Route path="/Explore" component={Explore} />
+          <Route exact path="/" component={HomePage} />
+        </BrowserRouter>
       </div>
       <div className="Footer">
-      <Footer />
+        <Footer />
       </div>
     </div>
   );

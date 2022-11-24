@@ -42,7 +42,7 @@ const Head2Head = (props) => {
                 <div>
                     <div className="eachSong">
                         <div key={songPair1[0].id} >
-                            <div> {songPair1[0].name} </div>
+                            <h3 style={{ color: 'white' }}> {songPair1[0].name} </h3>
                             <audio controls>
                                 <source src={songPair1[0].preview_url} type="audio/mpeg" />
                             </audio>
@@ -52,7 +52,7 @@ const Head2Head = (props) => {
 
                     <div className="eachSong">
                         <div key={songPair1[1].id} >
-                            <div> {songPair1[1].name} </div>
+                            <h3 style={{ color: 'white' }}> {songPair1[1].name} </h3>
                             <audio controls>
                                 <source src={songPair1[1].preview_url} type="audio/mpeg" />
                             </audio>
@@ -63,9 +63,10 @@ const Head2Head = (props) => {
             }
             {songsResults &&
                 <div>
+                    <h2 style={{ color: 'white' }}> Results</h2>
                     {songsResults.map(song => (
                         <div key={song.id} className='result'>
-                            <div > {song.name} </div>
+                            <h4 style={{ color: 'white' }}> {song.name} </h4>
                             <audio controls>
                                 <source src={song.preview_url} type="audio/mpeg" />
                             </audio>
