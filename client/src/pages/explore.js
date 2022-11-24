@@ -47,9 +47,9 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 }));
 export default function Explore() {
     const [tempoValue, setTempoValue] = React.useState([30, 50]);
-    const [danceValue, setDanceValue] = React.useState([0, 100]);
-    const [energyValue, setEnergyValue] = React.useState([0, 100]);
-    const [valenceValue, setValenceValue] = React.useState([0, 100]);
+    const [danceValue, setDanceValue] = React.useState([10, 90]);
+    const [energyValue, setEnergyValue] = React.useState([10, 90]);
+    const [valenceValue, setValenceValue] = React.useState([10, 90]);
 
     const [songsResults, setSongsResults] = useState([]);
     const [rowsPerPage, setRowsPerPage] = useState(10);
@@ -117,9 +117,9 @@ export default function Explore() {
     return (
         <div>
             <Box sx={{ flexGrow: 1 }}>
-                <Grid container spacing={2} columns={16}>
+                <Grid container spacing={10} columns={18}>
                     <Grid xs={8}>
-                        <label>Tempo</label>
+                        <h4>Tempo</h4>
                         <Slider
                             getAriaLabel={() => 'Temperature range'}
                             value={tempoValue}
@@ -129,7 +129,7 @@ export default function Explore() {
                         />
                     </Grid>
                     <Grid xs={8}>
-                        <label>Danceability</label>
+                        <h4>Danceability</h4>
                         <Slider
                             getAriaLabel={() => 'Temperature range'}
                             value={danceValue}
@@ -139,7 +139,7 @@ export default function Explore() {
                         />
                     </Grid>
                     <Grid xs={8}>
-                        <label>Energy</label>
+                        <h4>Energy</h4>
                         <Slider
                             getAriaLabel={() => 'Temperature range'}
                             value={energyValue}
@@ -149,7 +149,7 @@ export default function Explore() {
                         />
                     </Grid>
                     <Grid xs={8}>
-                        <label>Valence</label>
+                        <h4>Valence</h4>
                         <Slider
                             getAriaLabel={() => 'Temperature range'}
                             value={valenceValue}
@@ -160,6 +160,7 @@ export default function Explore() {
                     </Grid>
 
                 </Grid>
+                <div></div>
                 <Button variant="contained" onClick={() => handleSearch()}>Search</Button>
             </Box>
 
