@@ -273,11 +273,26 @@ async function getBar(req, res) {
         }
     });
 }
+async function getBarArtist(req, res) {
+    const { tempoLow, tempoHigh, valenceLow, valenceHigh, danceLow, danceHigh, energyLow, energyHigh } = req.query;
+    var aggr = `WITH getArtist(id)  as (SELECT artists_id FROM Tracks WHERE tempo > ${tempoLow} AND tempo < ${tempoHigh} AND valence > ${valenceLow} AND valence < ${valenceHigh} AND danceability > ${danceLow} AND danceability < ${danceHigh} AND energy > ${energyLow} AND energy < ${energyHigh} group by artists_id ORDER BY count(*) DESC LIMIT 1, 5) select name, artists.id as artist_id from artists join getArtist on artists.id = getArtist.id;`
+    connection.query(aggr, function (error, results, fields) {
+        if (error) {
+            console.log(error)
+            res.json({ error: error })
+        }
+        else if (results) {
+            console.log(aggr);
+            res.json({ results: results })
+        }
+    });
+}
 module.exports = {
     hello,
     random,
     search,
     sendRandom,
     getBar,
+    getBarArtist,
     getSearchResult
 }

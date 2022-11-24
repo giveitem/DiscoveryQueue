@@ -13,7 +13,7 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
-import { getBarResults } from '../fetcher.js'
+import { getBarResults, getBarArtist } from '../fetcher.js'
 
 
 const Item = styled(Paper)(({ theme }) => ({
@@ -50,9 +50,10 @@ export default function Explore() {
     const [danceValue, setDanceValue] = React.useState([0, 100]);
     const [energyValue, setEnergyValue] = React.useState([0, 100]);
     const [valenceValue, setValenceValue] = React.useState([0, 100]);
-
     const [songsResults, setSongsResults] = useState([]);
     const [rowsPerPage, setRowsPerPage] = useState(10);
+    const [artistResults, setArtistResults] = useState([]);
+
     const [page, setPage] = useState(0);
 
     const handleChangePage = (event, newPage) => {
@@ -89,6 +90,11 @@ export default function Explore() {
                 console.log(res);
                 console.log(songsResults);
 
+            });
+        getBarArtist(tempoValue, danceValue, energyValue, valenceValue)
+            .then(res => {
+                console.log("artist fired");
+                setArtistResults(res);
             });
     };
 
@@ -169,7 +175,17 @@ export default function Explore() {
 
                 </Box>
             </div>
-
+            {artistResults.length !== 0 && <div className='explore-artists'>
+                <h2 style={{ color: 'white' }}>Artists You May Like:</h2>
+                <div className="explore-artists-container">
+                    {artistResults.map((artist) => (
+                        <Item>
+                            <span>{artist.name}</span>
+                            <a href={`https://open.spotify.com/artist/${artist.artist_id}`} class="btn  btn-link" target="_blank">Check out on Spotify</a>
+                        </Item>
+                    ))}
+                </div>
+            </div>}
             <div className="explore-results">
                 <Paper sx={{ overflow: 'hidden', margin: '20px' }}>
                     <TableContainer sx={{ maxHeight: 800 }}>
