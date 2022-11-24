@@ -1,43 +1,123 @@
+* {
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+}
+
 .App {
-  text-align: center;
+    text-align: center;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+#root {
+    position: relative;
+    min-height: 100vh;
+    padding-bottom: 20px;
+    background-color: rgb(34, 37, 41);
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.Header {
+    position: relative;
+    /* height: 100px;
+    width: 100%; */
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+.Main {
+    text-align: center;
+    position: relative;
 }
 
-.App-link {
-  color: #61dafb;
+.Footer {
+    /* height: 20px; */
+    width: 100%;
+    position: absolute;
+    bottom: 0;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
 
-  to {
-    transform: rotate(360deg);
-  }
+/* .Homepage {
+    display: flex;
+    flex-direction: column;
+} */
+
+h1,
+h6 {
+    color: white;
 }
 
-.text-left {
-  text-align: left;
+.homepage-container {
+    display: flex;
+    justify-content: center;
+}
+
+.homepage-card {
+    background-color: white;
+    float: left;
+    border-style: solid;
+    border-radius: 20px;
+    margin: 20px;
+    width: 30%;
+    padding: 10px;
+    box-shadow: 0 4px 8px 0 grey;
+    transition: 0.3s;
+}
+
+.homepage-card:hover {
+    box-shadow: 0 12px 20px 0 white;
+}
+
+@media (max-width: 640px) {
+    .homepage-card {
+        float: none;
+        width: auto;
+    }
+}
+
+.explore-sliders {
+    display: flex;
+    justify-content: center;
+    border-radius: 4px;
+    padding: 10px;
+    background-color: whitesmoke;
+    margin: 20px;
+}
+
+.explore-submit {
+    margin: 15px 0 0 0;
+}
+
+.five-search {
+    display: flex;
+    justify-content: center;
+    border-radius: 4px;
+    padding: 10px;
+    background-color: whitesmoke;
+    margin: 20px;
+}
+
+button[name=five-submit] {
+    background-color: rgb(56, 116, 203);
+    border-radius: 5px;
+    border: none;
+    color: white;
+    padding: 5px 20px 5px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 5px 20px 5px 20px;
+}
+
+input[name=five-submit] {
+    border: 2px solid rgb(56, 116, 203);
+    border-radius: 4px;
+    margin: 5px 20px 5px 20px;
+}
+
+.five-selected {
+    display: flex;
+    justify-content: center;
+    border-radius: 4px;
+    padding: 10px;
+    background-color: whitesmoke;
+    margin: 20px;
 }

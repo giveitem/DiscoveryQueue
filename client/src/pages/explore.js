@@ -116,9 +116,11 @@ export default function Explore() {
 
     return (
         <div>
+            <h1>Explore</h1>
+            <div className="explore-sliders">
             <Box sx={{ flexGrow: 1 }}>
-                <Grid container spacing={2} columns={16}>
-                    <Grid xs={8}>
+                <Grid container spacing={5} columns={18}>
+                    <Grid xs={4}>
                         <label>Tempo</label>
                         <Slider
                             getAriaLabel={() => 'Temperature range'}
@@ -128,7 +130,7 @@ export default function Explore() {
                             getAriaValueText={valuetext}
                         />
                     </Grid>
-                    <Grid xs={8}>
+                    <Grid xs={4}>
                         <label>Danceability</label>
                         <Slider
                             getAriaLabel={() => 'Temperature range'}
@@ -138,7 +140,7 @@ export default function Explore() {
                             getAriaValueText={valuetext}
                         />
                     </Grid>
-                    <Grid xs={8}>
+                    <Grid xs={4}>
                         <label>Energy</label>
                         <Slider
                             getAriaLabel={() => 'Temperature range'}
@@ -148,7 +150,7 @@ export default function Explore() {
                             getAriaValueText={valuetext}
                         />
                     </Grid>
-                    <Grid xs={8}>
+                    <Grid xs={4}>
                         <label>Valence</label>
                         <Slider
                             getAriaLabel={() => 'Temperature range'}
@@ -158,12 +160,18 @@ export default function Explore() {
                             getAriaValueText={valuetext}
                         />
                     </Grid>
-
+                    <Grid xs={2}>
+                        <div className="explore-submit">
+                    <Button variant="contained" onClick={() => handleSearch()}>Search</Button>
+                    </div>
+                    </Grid>
                 </Grid>
-                <Button variant="contained" onClick={() => handleSearch()}>Search</Button>
+                
             </Box>
+            </div>
 
-            <Paper sx={{ width: '100%', overflow: 'hidden' }}>
+            <div className="explore-results">
+            <Paper sx={{ overflow: 'hidden', margin: '20px'}}>
                 <TableContainer sx={{ maxHeight: 800 }}>
                     <Table stickyHeader aria-label="sticky table">
                         <TableHead>
@@ -211,6 +219,7 @@ export default function Explore() {
                     onRowsPerPageChange={handleChangeRowsPerPage}
                 />
             </Paper >
+            </div>
 
         </div>
 
