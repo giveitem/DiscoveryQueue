@@ -16,8 +16,8 @@ const getSearchSongs = async (songName, artistName) => {
     console.log(ans)
     return ans;
 }
-const getSongResults = async (songNames) => {
-    let qString = `http://${config.server_host}:${config.server_port}/getSongs?songName=${songNames}`;
+const getSongResults = async (songId) => {
+    let qString = `http://${config.server_host}:${config.server_port}/getSongs?songId=${songId}`;
     console.log(qString);
     const res = await fetch(qString);
     const ans = await res.json();
@@ -29,13 +29,19 @@ const getRandSongs = async (attr) => {
 
     const highres = await fetch(`http://${config.server_host}:${config.server_port}/random?attr=${attr}&endpoint=high`);
     const highans = await highres.json();
-    songArray.push(highans.results[0]);
+    let qString = `http://${config.server_host}:${config.server_port}/getAlbCover?songId=${highans.results[0].id}`;
+    let res = await fetch(qString);
+    let ans = await res.json();
+
+    songArray.push({ song: highans.results[0], cover: ans.results });
+
 
     const lowres = await fetch(`http://${config.server_host}:${config.server_port}/random?attr=${attr}&endpoint=low`);
     const lowans = await lowres.json();
-    songArray.push(lowans.results[0]);
-
-
+    qString = `http://${config.server_host}:${config.server_port}/getAlbCover?songId=${lowans.results[0].id}`;
+    res = await fetch(qString);
+    ans = await res.json();
+    songArray.push({ song: lowans.results[0], cover: ans.results });
     return songArray;
 }
 const getRandResults = async (query) => {
@@ -105,4 +111,13 @@ const getBarArtist = async (tempoValue, danceValue, energyValue, valenceValue) =
     const ans = await res.json();
     return ans.results;
 }
-export { getSearchSongs, getRandSongs, getRandResults, getBarResults, getSongResults, getBarArtist }
+const getAlbCover = async (songId) => {
+    let qString = `http://${config.server_host}:${config.server_port}/getAlbCover?songId=${songId}`;
+    console.log(qString);
+    const res = await fetch(qString);
+    const ans = await res.json();
+
+    return ans.results;
+
+}
+export { getSearchSongs, getRandSongs, getRandResults, getBarResults, getSongResults, getBarArtist, getAlbCover }

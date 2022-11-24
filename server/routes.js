@@ -1,8 +1,7 @@
 const config = require('./config.json')
 const mysql = require('mysql');
 const e = require('express');
-
-
+const request = require('request');
 const connection = mysql.createConnection({
     host: config.rds_host,
     user: config.rds_user,
@@ -13,6 +12,38 @@ const connection = mysql.createConnection({
 connection.connect();
 
 
+//////////////////////////////////////////////////
+const SpotifyWebApi = require('spotify-web-api-node');
+var spotifyApi = new SpotifyWebApi();
+var client_id = 'f48056d142d3469bb32b209af9fdd3ed';
+var client_secret = '16662dbdb7544a1dbb712a7e5cc7263f';
+var authOptions = {
+    url: 'https://accounts.spotify.com/api/token',
+    headers: {
+        'Authorization': 'Basic ' + (new Buffer(client_id + ':' + client_secret).toString('base64'))
+    },
+    form: {
+        grant_type: 'client_credentials'
+    },
+    json: true
+};
+var token = "";
+let first = timer();
+let myVar = setInterval(function () { timer() }, 3500000);
+function timer() {
+    request.post(authOptions, function (error, response, body) {
+        if (!error && response.statusCode === 200) {
+            token = body.access_token;
+            spotifyApi.setAccessToken(token);
+        }
+    })
+    console.log("token refreshed");
+}
+
+function stopFunction() {
+    clearInterval(myVar);
+}
+////////////////////////////////////////////////////////////////////////
 // ********************************************
 //            SIMPLE ROUTE EXAMPLE
 // ********************************************
@@ -31,7 +62,7 @@ async function hello(req, res) {
 
 }
 
-
+// Search route for Five4Five
 async function search(req, res) {
     console.log(req.query)
     let query = "";
@@ -60,8 +91,10 @@ async function search(req, res) {
         }
     });
 }
+
+//Get result route for Five4Five
 async function getSearchResult(req, res) {
-    var query = `WITH inital(id) as (select top_song from tracks where id = '${req.query.songName}') SELECT inital.id as id, tracks.name as name from inital join tracks on inital.id = tracks.id;`
+    var query = `WITH inital(id) as (select top_song from tracks where id = '${req.query.songId}') SELECT inital.id as id, tracks.name as name from inital join tracks on inital.id = tracks.id;`
     console.log(query)
     connection.query(query, function (error, results, fields) {
         if (error) {
@@ -74,6 +107,7 @@ async function getSearchResult(req, res) {
     });
 }
 
+//Route for selecting random track for each attribute (Head2Head)
 async function random(req, res) {
     switch (req.query.attr) {
         case "valence":
@@ -209,6 +243,8 @@ async function random(req, res) {
     }
 
 }
+
+//Route for sending back result for Head2Head
 async function sendRandom(req, res) {
     var base = "SELECT name, id,preview_url FROM Tracks WHERE ";
 
@@ -255,12 +291,12 @@ async function sendRandom(req, res) {
     });
 }
 
+//Route for sending back result for Explore
 async function getBar(req, res) {
-    var base = 'SELECT name, id,preview_url FROM Tracks WHERE ';
-
     const { tempoLow, tempoHigh, valenceLow, valenceHigh, danceLow, danceHigh, energyLow, energyHigh } = req.query;
+    var base = `with beta (track_name, album_id, artists_id, preview) as (SELECT name, album_id, artists_id, preview_url FROM Tracks WHERE tempo > ${tempoLow} AND tempo < ${tempoHigh} AND valence > ${valenceLow} AND valence < ${valenceHigh} AND danceability > ${danceLow} AND danceability < ${danceHigh} AND energy > ${energyLow} AND energy < ${energyHigh}), album_named (track_name, album_name, artists_id, preview, release_date) as (SELECT beta.track_name, Albums.name, beta.artists_id, beta.preview, albums.release_date FROM beta join Albums on beta.album_id = Albums.id), artists_named (track_name, album_name, artists_name, preview, release_date) as (SELECT album_named.track_name, album_named.album_name, Artists.name, album_named.preview, album_named.release_date FROM album_named join Artists on album_named.artists_id = Artists.id)  SELECT * FROM artists_named;`
 
-    base += `tempo > ${tempoLow} AND tempo < ${tempoHigh} AND valence > ${valenceLow} AND valence < ${valenceHigh} AND danceability > ${danceLow} AND danceability < ${danceHigh} AND energy > ${energyLow} AND energy < ${energyHigh};`;
+
 
     connection.query(base, function (error, results, fields) {
         if (error) {
@@ -273,6 +309,9 @@ async function getBar(req, res) {
         }
     });
 }
+
+
+//Route for sending back recommended artists for Explore
 async function getBarArtist(req, res) {
     const { tempoLow, tempoHigh, valenceLow, valenceHigh, danceLow, danceHigh, energyLow, energyHigh } = req.query;
     var aggr = `WITH getArtist(id)  as (SELECT artists_id FROM Tracks WHERE tempo > ${tempoLow} AND tempo < ${tempoHigh} AND valence > ${valenceLow} AND valence < ${valenceHigh} AND danceability > ${danceLow} AND danceability < ${danceHigh} AND energy > ${energyLow} AND energy < ${energyHigh} group by artists_id ORDER BY count(*) DESC LIMIT 1, 5) select name, artists.id as artist_id from artists join getArtist on artists.id = getArtist.id;`
@@ -287,6 +326,24 @@ async function getBarArtist(req, res) {
         }
     });
 }
+
+
+//Route for returning the album art for a given track
+async function getAlbCover(req, res) {
+    var spotifyApi = new SpotifyWebApi();
+    spotifyApi.setAccessToken(token);
+    spotifyApi.getTrack(req.query.songId)
+        .then(function (data) {
+            if (data.body.album.images[1]) {
+                res.json({ results: data.body.album.images[1].url })
+            } else {
+                res.json({ results: 'https://play-lh.googleusercontent.com/P2VMEenhpIsubG2oWbvuLGrs0GyyzLiDosGTg8bi8htRXg9Uf0eUtHiUjC28p1jgHzo=w480-h960' })
+            }
+        }, function (err) {
+            console.error(err);
+        });
+}
+
 module.exports = {
     hello,
     random,
@@ -294,5 +351,6 @@ module.exports = {
     sendRandom,
     getBar,
     getBarArtist,
-    getSearchResult
+    getSearchResult,
+    getAlbCover
 }

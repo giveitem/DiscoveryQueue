@@ -19,7 +19,7 @@ app.get('/getRandom', routes.sendRandom);
 app.get('/getBars', routes.getBar);
 app.get('/getBarArtist', routes.getBarArtist);
 app.get('/getSongs', routes.getSearchResult);
-
+app.get('/getAlbCover', routes.getAlbCover);
 app.listen(config.server_port, () => {
     console.log(`Server running at http://${config.server_host}:${config.server_port}/`);
 });

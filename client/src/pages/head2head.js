@@ -8,17 +8,25 @@ const Head2Head = (props) => {
     const [songPair1, setSongPair1] = useState([]);
     const [counter, setCounter] = useState(0);
     const [query, setQuery] = useState([]);
+    const [imgs, setImgs] = useState([]);
     let attrs = ["valence", "danceability", "energy", "acousticness", "tempo"];
 
 
 
 
     useEffect(() => {
+
         getRandSongs(attrs[counter]).then((res) => {
+
             setSongPair1(res);
-        })
-        console.log("fired");
+            console.log(res);
+        });
+        console.log(songPair1);
+
     }, [counter]);
+
+
+
 
     const handleClick = (highlow) => {
         if (counter < 4) {
@@ -41,22 +49,24 @@ const Head2Head = (props) => {
             {counter < 5 && songPair1[0] &&
                 <div>
                     <div className="eachSong">
-                        <div key={songPair1[0].id} >
-                            <h3 style={{ color: 'white' }}> {songPair1[0].name} </h3>
+                        <div key={songPair1[0].song.id} >
+                            <h3 style={{ color: 'white' }}> {songPair1[0].song.name} </h3>
                             <audio controls>
-                                <source src={songPair1[0].preview_url} type="audio/mpeg" />
+                                <source src={songPair1[0].song.preview_url} type="audio/mpeg" />
                             </audio>
                         </div>
+                        <img src={songPair1[0].cover} alt="Cover" />
                         <Button onClick={() => handleClick("high")}>Select</Button>
                     </div>
 
                     <div className="eachSong">
-                        <div key={songPair1[1].id} >
-                            <h3 style={{ color: 'white' }}> {songPair1[1].name} </h3>
+                        <div key={songPair1[1].song.id} >
+                            <h3 style={{ color: 'white' }}> {songPair1[1].song.name} </h3>
                             <audio controls>
-                                <source src={songPair1[1].preview_url} type="audio/mpeg" />
+                                <source src={songPair1[1].song.preview_url} type="audio/mpeg" />
                             </audio>
                         </div>
+                        <img src={songPair1[1].cover} alt="Cover" />
                         <Button onClick={() => handleClick("low")}>Select</Button>
                     </div>
                 </div >

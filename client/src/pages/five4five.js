@@ -127,8 +127,6 @@ const Five4Five = (props) => {
         for (let i = 0; i < 5; i++) {
             getSongResults(songIds[i]).then(res => {
 
-                console.log(res);
-                console.log(songMatchedResults);
                 selected.push(res[0]);
             });
         }
@@ -147,10 +145,10 @@ const Five4Five = (props) => {
 
             <div className='five-search'>
                 <label name="five-submit">Song Name</label>
-            <input type='text' name="five-submit" placeholder="Song Name" onChange={(event) => setSearch(event.target.value)} />
-            <label name="five-submit">Artist Name</label>
-            <input type='text' name="five-submit" placeholder="Artist Name" onChange={(event) => setSearchA(event.target.value)} />
-            <button name="five-submit" onClick={() => updateSearchResults()} >SEARCH</button>
+                <input type='text' name="five-submit" placeholder="Song Name" onChange={(event) => setSearch(event.target.value)} />
+                <label name="five-submit">Artist Name</label>
+                <input type='text' name="five-submit" placeholder="Artist Name" onChange={(event) => setSearchA(event.target.value)} />
+                <button name="five-submit" onClick={() => updateSearchResults()} >SEARCH</button>
             </div>
 
             <div className='five-selected'>
@@ -192,7 +190,7 @@ const Five4Five = (props) => {
                     </div>
                 ))}
             </div> */}
-            <Paper sx={{ overflow: 'hidden', margin: '20px'}}>
+            <Paper sx={{ overflow: 'hidden', margin: '20px' }}>
                 <TableContainer sx={{ maxHeight: 800 }}>
                     <Table stickyHeader aria-label="sticky table">
                         <TableHead >
