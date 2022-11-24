@@ -46,7 +46,7 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
     },
 }));
 export default function Explore() {
-    const [tempoValue, setTempoValue] = React.useState([30, 50]);
+    const [tempoValue, setTempoValue] = React.useState([63, 175]);
     const [danceValue, setDanceValue] = React.useState([0, 100]);
     const [energyValue, setEnergyValue] = React.useState([0, 100]);
     const [valenceValue, setValenceValue] = React.useState([0, 100]);
@@ -99,7 +99,7 @@ export default function Explore() {
     };
 
     const columns = [
-        { id: 'name', label: 'Track Name', minWidth: 170 },
+        { id: 'track_name', label: 'Track Name', minWidth: 170 },
         {
             id: 'artists_name',
             label: 'Artist',
@@ -107,13 +107,22 @@ export default function Explore() {
             align: 'right',
         },
         {
-            id: 'album',
+            id: 'album_name',
             label: 'Album',
             minWidth: 170,
             align: 'right',
         },
+
         {
-            id: 'date',
+            id: 'preview',
+            label: 'Preview',
+            minWidth: 170,
+            align: 'right'
+
+
+        },
+        {
+            id: 'release_date',
             label: 'Release Date',
             minWidth: 170,
             align: 'right',
@@ -134,6 +143,9 @@ export default function Explore() {
                                 onChange={handleTempoChange}
                                 valueLabelDisplay="auto"
                                 getAriaValueText={valuetext}
+                                min={50}
+                                step={1}
+                                max={175}
                             />
                         </Grid>
                         <Grid xs={4}>
@@ -213,9 +225,9 @@ export default function Explore() {
                                                     const value = row[column.id];
                                                     return (
                                                         <TableCell key={column.id} align={column.align}>
-                                                            {column.format && typeof value === 'number'
-                                                                ? column.format(value)
-                                                                : value}
+                                                            {column.id === 'preview'
+                                                                ? <audio controls src={value}></audio> : value
+                                                            }
                                                         </TableCell>
                                                     );
                                                 })}
