@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import './Five4Five.css';
+// import './Five4Five.css';
 import { getSearchSongs, getSongResults } from '../fetcher.js'
 import * as React from 'react';
 import Paper from '@mui/material/Paper';
@@ -145,13 +145,15 @@ const Five4Five = (props) => {
         <div className='HomePage' >
             <h1>Five4Five</h1>
 
-            <input type='text' placeholder="Song Name" onChange={(event) => setSearch(event.target.value)} />
+            <div className='five-search'>
+                <label name="five-submit">Song Name</label>
+            <input type='text' name="five-submit" placeholder="Song Name" onChange={(event) => setSearch(event.target.value)} />
+            <label name="five-submit">Artist Name</label>
+            <input type='text' name="five-submit" placeholder="Artist Name" onChange={(event) => setSearchA(event.target.value)} />
+            <button name="five-submit" onClick={() => updateSearchResults()} >SEARCH</button>
+            </div>
 
-            <input type='text' placeholder="Artist Name" onChange={(event) => setSearchA(event.target.value)} />
-
-            <button onClick={() => updateSearchResults()}>Search</button>
-
-            <div className='Selected'>
+            <div className='five-selected'>
                 <h2>Selected Songs</h2>
                 <h3>{counter}/5 </h3>
                 {selectedSongs.map(song => (
@@ -168,7 +170,7 @@ const Five4Five = (props) => {
             </div>
 
             {songMatchedResults.length !== 0 &&
-                <div className='Selected'>
+                <div className='five-selected'>
                     <h2>Your Playlist</h2>
                     {songMatchedResults.map(song => (
                         <div key={song.id}>
@@ -190,7 +192,7 @@ const Five4Five = (props) => {
                     </div>
                 ))}
             </div> */}
-            <Paper sx={{ width: '100%', overflow: 'hidden' }}>
+            <Paper sx={{ overflow: 'hidden', margin: '20px'}}>
                 <TableContainer sx={{ maxHeight: 800 }}>
                     <Table stickyHeader aria-label="sticky table">
                         <TableHead >

@@ -47,9 +47,9 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 }));
 export default function Explore() {
     const [tempoValue, setTempoValue] = React.useState([30, 50]);
-    const [danceValue, setDanceValue] = React.useState([10, 90]);
-    const [energyValue, setEnergyValue] = React.useState([10, 90]);
-    const [valenceValue, setValenceValue] = React.useState([10, 90]);
+    const [danceValue, setDanceValue] = React.useState([0, 100]);
+    const [energyValue, setEnergyValue] = React.useState([0, 100]);
+    const [valenceValue, setValenceValue] = React.useState([0, 100]);
 
     const [songsResults, setSongsResults] = useState([]);
     const [rowsPerPage, setRowsPerPage] = useState(10);
@@ -116,102 +116,110 @@ export default function Explore() {
 
     return (
         <div>
-            <Box sx={{ flexGrow: 1 }}>
-                <Grid container spacing={10} columns={18}>
-                    <Grid xs={8}>
-                        <h4>Tempo</h4>
-                        <Slider
-                            getAriaLabel={() => 'Temperature range'}
-                            value={tempoValue}
-                            onChange={handleTempoChange}
-                            valueLabelDisplay="auto"
-                            getAriaValueText={valuetext}
-                        />
-                    </Grid>
-                    <Grid xs={8}>
-                        <h4>Danceability</h4>
-                        <Slider
-                            getAriaLabel={() => 'Temperature range'}
-                            value={danceValue}
-                            onChange={handleDanceChange}
-                            valueLabelDisplay="auto"
-                            getAriaValueText={valuetext}
-                        />
-                    </Grid>
-                    <Grid xs={8}>
-                        <h4>Energy</h4>
-                        <Slider
-                            getAriaLabel={() => 'Temperature range'}
-                            value={energyValue}
-                            onChange={handleEnergyChange}
-                            valueLabelDisplay="auto"
-                            getAriaValueText={valuetext}
-                        />
-                    </Grid>
-                    <Grid xs={8}>
-                        <h4>Valence</h4>
-                        <Slider
-                            getAriaLabel={() => 'Temperature range'}
-                            value={valenceValue}
-                            onChange={handleValenceChange}
-                            valueLabelDisplay="auto"
-                            getAriaValueText={valuetext}
-                        />
+            <h1>Explore</h1>
+            <div className="explore-sliders">
+                <Box sx={{ flexGrow: 1 }}>
+                    <Grid container spacing={5} columns={18}>
+                        <Grid xs={4}>
+                            <label>Tempo</label>
+                            <Slider
+                                getAriaLabel={() => 'Temperature range'}
+                                value={tempoValue}
+                                onChange={handleTempoChange}
+                                valueLabelDisplay="auto"
+                                getAriaValueText={valuetext}
+                            />
+                        </Grid>
+                        <Grid xs={4}>
+                            <label>Danceability</label>
+                            <Slider
+                                getAriaLabel={() => 'Temperature range'}
+                                value={danceValue}
+                                onChange={handleDanceChange}
+                                valueLabelDisplay="auto"
+                                getAriaValueText={valuetext}
+                            />
+                        </Grid>
+                        <Grid xs={4}>
+                            <label>Energy</label>
+                            <Slider
+                                getAriaLabel={() => 'Temperature range'}
+                                value={energyValue}
+                                onChange={handleEnergyChange}
+                                valueLabelDisplay="auto"
+                                getAriaValueText={valuetext}
+                            />
+                        </Grid>
+                        <Grid xs={4}>
+                            <label>Valence</label>
+                            <Slider
+                                getAriaLabel={() => 'Temperature range'}
+                                value={valenceValue}
+                                onChange={handleValenceChange}
+                                valueLabelDisplay="auto"
+                                getAriaValueText={valuetext}
+                            />
+                        </Grid>
+                        <Grid xs={2}>
+                            <div className="explore-submit">
+                                <Button variant="contained" onClick={() => handleSearch()}>Search</Button>
+                            </div>
+                        </Grid>
                     </Grid>
 
-                </Grid>
-                <div></div>
-                <Button variant="contained" onClick={() => handleSearch()}>Search</Button>
-            </Box>
+                </Box>
+            </div>
 
-            <Paper sx={{ width: '100%', overflow: 'hidden' }}>
-                <TableContainer sx={{ maxHeight: 800 }}>
-                    <Table stickyHeader aria-label="sticky table">
-                        <TableHead>
-                            <TableRow>
-                                {columns.map((column) => (
-                                    <StyledTableCell
-                                        key={column.id}
-                                        align={column.align}
-                                        style={{ minWidth: column.minWidth }}
-                                    >
-                                        {column.label}
-                                    </StyledTableCell>
-                                ))}
-                            </TableRow>
-                        </TableHead>
-                        {songsResults && <TableBody>
-                            {songsResults
-                                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                                .map((row) => {
-                                    return (
-                                        <TableRow hover role="checkbox" tabIndex={-1} key={row.id}>
-                                            {columns.map((column) => {
-                                                const value = row[column.id];
-                                                return (
-                                                    <TableCell key={column.id} align={column.align}>
-                                                        {column.format && typeof value === 'number'
-                                                            ? column.format(value)
-                                                            : value}
-                                                    </TableCell>
-                                                );
-                                            })}
-                                        </TableRow>
-                                    );
-                                })}
-                        </TableBody>}
-                    </Table>
-                </TableContainer>
-                <TablePagination
-                    rowsPerPageOptions={[10, 25, 100]}
-                    component="div"
-                    count={songsResults === undefined ? 0 : songsResults.length}
-                    rowsPerPage={rowsPerPage}
-                    page={page}
-                    onPageChange={handleChangePage}
-                    onRowsPerPageChange={handleChangeRowsPerPage}
-                />
-            </Paper >
+            <div className="explore-results">
+                <Paper sx={{ overflow: 'hidden', margin: '20px' }}>
+                    <TableContainer sx={{ maxHeight: 800 }}>
+                        <Table stickyHeader aria-label="sticky table">
+                            <TableHead>
+                                <TableRow>
+                                    {columns.map((column) => (
+                                        <StyledTableCell
+                                            key={column.id}
+                                            align={column.align}
+                                            style={{ minWidth: column.minWidth }}
+                                        >
+                                            {column.label}
+                                        </StyledTableCell>
+                                    ))}
+                                </TableRow>
+                            </TableHead>
+                            {songsResults && <TableBody>
+                                {songsResults
+                                    .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                                    .map((row) => {
+                                        return (
+                                            <TableRow hover role="checkbox" tabIndex={-1} key={row.id}>
+                                                {columns.map((column) => {
+                                                    const value = row[column.id];
+                                                    return (
+                                                        <TableCell key={column.id} align={column.align}>
+                                                            {column.format && typeof value === 'number'
+                                                                ? column.format(value)
+                                                                : value}
+                                                        </TableCell>
+                                                    );
+                                                })}
+                                            </TableRow>
+                                        );
+                                    })}
+                            </TableBody>}
+                        </Table>
+                    </TableContainer>
+                    <TablePagination
+                        rowsPerPageOptions={[10, 25, 100]}
+                        component="div"
+                        count={songsResults === undefined ? 0 : songsResults.length}
+                        rowsPerPage={rowsPerPage}
+                        page={page}
+                        onPageChange={handleChangePage}
+                        onRowsPerPageChange={handleChangeRowsPerPage}
+                    />
+                </Paper >
+            </div>
 
         </div>
 
