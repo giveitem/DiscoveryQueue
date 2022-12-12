@@ -301,7 +301,7 @@ async function getBar(req, res) {
 //Route for sending back recommended artists for Explore
 async function getBarArtist(req, res) {
     const { tempoLow, tempoHigh, valenceLow, valenceHigh, danceLow, danceHigh, energyLow, energyHigh } = req.query;
-    var aggr = `WITH getAlb(id) as (SELECT album_id FROM tracks WHERE tempo > ${tempoLow} AND tempo < ${tempoHigh} AND valence > ${valenceLow} AND valence < ${valenceHigh} AND danceability > ${danceLow} AND danceability < ${danceHigh} AND energy > ${energyLow} AND energy < ${energyHigh}), getArt(id, counter) as (SELECT artist_id, count(*) from getAlb join albums on albums.id = getAlb.id group by getAlb.id ORDER BY count(*) DESC LIMIT 1, 5) select name, getArt.counter from getArt join artists on artists.id = getArt.id;`
+    var aggr = `WITH getAlb(id) as (SELECT album_id FROM tracks WHERE tempo > ${tempoLow} AND tempo < ${tempoHigh} AND valence > ${valenceLow} AND valence < ${valenceHigh} AND danceability > ${danceLow} AND danceability < ${danceHigh} AND energy > ${energyLow} AND energy < ${energyHigh}), getArt(id) as (SELECT artist_id from getAlb join albums on albums.id = getAlb.id group by getAlb.id ORDER BY count(*) DESC LIMIT 1, 5) select name, artists.id AS artists_id from getArt join artists on artists.id = getArt.id;`
     connection.query(aggr, function (error, results, fields) {
         if (error) {
             console.log(error)

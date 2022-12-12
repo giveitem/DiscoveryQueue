@@ -193,7 +193,7 @@ export default function Explore() {
                     {artistResults.map((artist) => (
                         <Item>
                             <span>{artist.name}</span>
-                            <a href={`https://open.spotify.com/artist/${artist.artist_id}`} class="btn  btn-link" target="_blank">Check out on Spotify</a>
+                            <a href={`https://open.spotify.com/artist/${artist.artists_id}`} class="btn  btn-link" target="_blank">Check out on Spotify</a>
                         </Item>
                     ))}
                 </div>
