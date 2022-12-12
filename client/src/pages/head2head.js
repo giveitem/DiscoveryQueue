@@ -80,11 +80,11 @@ const Head2Head = (props) => {
                             <h5 style={{ color: 'white' }}> By: {song.artist_name} </h5>
                             <a href={`https://open.spotify.com/track/${song.track_id}`} class="btn  btn-link" target="_blank">Go Listen on Spotify</a>
                             <div></div>
-                            <img src={song.cover} alt="Cover" />
-                            <div> </div>
                             <audio controls>
                                 <source src={song.preview} type="audio/mpeg" />
                             </audio>
+                            <div></div>
+                            <img src={song.cover} alt="Cover" />
                         </div>
                     ))}
                 </div>
