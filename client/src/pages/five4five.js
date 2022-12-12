@@ -131,7 +131,7 @@ const Five4Five = (props) => {
             });
         }
         console.log(selected);
-        timeout(50).then(res => {
+        timeout(400).then(res => {
             setSongMatchedResults(selected);
         }
         )

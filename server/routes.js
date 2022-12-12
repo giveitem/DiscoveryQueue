@@ -94,7 +94,7 @@ async function random(req, res) {
     switch (req.query.attr) {
         case "valence":
             if (req.query.endpoint == "high") {
-                var highQuery = "SELECT name, id, preview_url FROM Tracks WHERE valence > 0.8 AND valence < 0.9 ORDER BY RAND() LIMIT 1;";
+                var highQuery = "SELECT name, id, preview_url FROM tracks WHERE valence > 0.8 AND valence < 0.9 ORDER BY RAND() LIMIT 1;";
                 connection.query(highQuery, function (error, results, fields) {
                     if (error) {
                         console.log(error)
@@ -105,7 +105,7 @@ async function random(req, res) {
                     }
                 });
             } else {
-                var lowQuery = "SELECT name, id, preview_url FROM Tracks WHERE valence > 0.1 AND valence < 0.2 ORDER BY RAND() LIMIT 1;";
+                var lowQuery = "SELECT name, id, preview_url FROM tracks WHERE valence > 0.1 AND valence < 0.2 ORDER BY RAND() LIMIT 1;";
                 connection.query(lowQuery, function (error, results, fields) {
                     if (error) {
                         console.log(error)
@@ -119,7 +119,7 @@ async function random(req, res) {
             break;
         case "danceability":
             if (req.query.endpoint == "high") {
-                var highQuery = "SELECT name, id, preview_url FROM Tracks WHERE danceability > 0.8 AND danceability < 0.9 ORDER BY RAND() LIMIT 1;";
+                var highQuery = "SELECT name, id, preview_url FROM tracks WHERE danceability > 0.8 AND danceability < 0.9 ORDER BY RAND() LIMIT 1;";
                 connection.query(highQuery, function (error, results, fields) {
                     if (error) {
                         console.log(error)
@@ -131,7 +131,7 @@ async function random(req, res) {
                     }
                 });
             } else {
-                var lowQuery = "SELECT name, id, preview_url FROM Tracks WHERE danceability > 0.2 AND danceability < 0.4 ORDER BY RAND() LIMIT 1;";
+                var lowQuery = "SELECT name, id, preview_url FROM tracks WHERE danceability > 0.2 AND danceability < 0.4 ORDER BY RAND() LIMIT 1;";
                 connection.query(lowQuery, function (error, results, fields) {
                     if (error) {
                         console.log(error)
@@ -145,7 +145,7 @@ async function random(req, res) {
             break;
         case "energy":
             if (req.query.endpoint == "high") {
-                var highQuery = "SELECT name, id, preview_url FROM Tracks WHERE energy > 0.8 AND energy < 0.9 ORDER BY RAND() LIMIT 1;";
+                var highQuery = "SELECT name, id, preview_url FROM tracks WHERE energy > 0.8 AND energy < 0.9 ORDER BY RAND() LIMIT 1;";
                 connection.query(highQuery, function (error, results, fields) {
                     if (error) {
                         console.log(error)
@@ -156,7 +156,7 @@ async function random(req, res) {
                     }
                 });
             } else {
-                var lowQuery = "SELECT name, id, preview_url FROM Tracks WHERE energy > 0.2 AND energy < 0.4 ORDER BY RAND() LIMIT 1;";
+                var lowQuery = "SELECT name, id, preview_url FROM tracks WHERE energy > 0.2 AND energy < 0.4 ORDER BY RAND() LIMIT 1;";
                 connection.query(lowQuery, function (error, results, fields) {
                     if (error) {
                         console.log(error)
@@ -171,7 +171,7 @@ async function random(req, res) {
 
         case "acousticness":
             if (req.query.endpoint == "high") {
-                var highQuery = "SELECT name, id, preview_url FROM Tracks WHERE acousticness > 0.88 AND acousticness < 0.98 ORDER BY RAND() LIMIT 1;";
+                var highQuery = "SELECT name, id, preview_url FROM tracks WHERE acousticness > 0.88 AND acousticness < 0.98 ORDER BY RAND() LIMIT 1;";
                 connection.query(highQuery, function (error, results, fields) {
                     if (error) {
                         console.log(error)
@@ -182,7 +182,7 @@ async function random(req, res) {
                     }
                 });
             } else {
-                var lowQuery = "SELECT name, id, preview_url FROM Tracks WHERE acousticness > 0.14 AND acousticness < 0.2 ORDER BY RAND() LIMIT 1;";
+                var lowQuery = "SELECT name, id, preview_url FROM tracks WHERE acousticness > 0.14 AND acousticness < 0.2 ORDER BY RAND() LIMIT 1;";
                 connection.query(lowQuery, function (error, results, fields) {
                     if (error) {
                         console.log(error)
@@ -196,7 +196,7 @@ async function random(req, res) {
             break;
         case "tempo":
             if (req.query.endpoint == "high") {
-                var highQuery = "SELECT name, id, preview_url FROM Tracks WHERE tempo > 150 AND tempo < 170 ORDER BY RAND() LIMIT 1;";
+                var highQuery = "SELECT name, id, preview_url FROM tracks WHERE tempo > 150 AND tempo < 170 ORDER BY RAND() LIMIT 1;";
                 connection.query(highQuery, function (error, results, fields) {
                     if (error) {
                         console.log(error)
@@ -207,7 +207,7 @@ async function random(req, res) {
                     }
                 });
             } else {
-                var lowQuery = "SELECT name, id, preview_url FROM Tracks WHERE  tempo > 83 AND tempo < 89 ORDER BY RAND() LIMIT 1;";
+                var lowQuery = "SELECT name, id, preview_url FROM tracks WHERE  tempo > 83 AND tempo < 89 ORDER BY RAND() LIMIT 1;";
                 connection.query(lowQuery, function (error, results, fields) {
                     if (error) {
                         console.log(error)
@@ -229,7 +229,7 @@ async function random(req, res) {
 //Route for sending back result for Head2Head
 async function sendRandom(req, res) {
     var prefix = "WITH selected_tracks (name,id,album_id,preview) as(";
-    var base = "SELECT name, id, album_id, preview_url FROM Tracks WHERE ";
+    var base = "SELECT name, id, album_id, preview_url FROM tracks WHERE ";
 
     //valence
     if (req.query.valence == "high") {
@@ -263,7 +263,7 @@ async function sendRandom(req, res) {
     } else {
         base += "tempo > 74 AND tempo < 110 ORDER BY RAND() LIMIT 5";
     }
-    var postfix = "), selected_artist (name,id, preview, artist_id)     as ( SELECT selected_tracks.name, selected_tracks.id, selected_tracks.preview, artist_id FROM albums join selected_tracks on selected_tracks.album_id = albums.id) select selected_artist.name as track_name, selected_artist.id as track_id, selected_artist.preview as preview, artists.name as artist_name from artists join selected_artist on selected_artist.artist_id = artists.id;"
+    var postfix = "), selected_artist (name,id, preview, artist_id) as ( SELECT selected_tracks.name, selected_tracks.id, selected_tracks.preview, artist_id FROM albums join selected_tracks on selected_tracks.album_id = albums.id) select selected_artist.name as track_name, selected_artist.id as track_id, selected_artist.preview as preview, artists.name as artist_name from artists join selected_artist on selected_artist.artist_id = artists.id;"
     var finalQuery = prefix + base + postfix;
 
     console.log(finalQuery);
@@ -281,7 +281,7 @@ async function sendRandom(req, res) {
 //Route for sending back result for Explore
 async function getBar(req, res) {
     const { tempoLow, tempoHigh, valenceLow, valenceHigh, danceLow, danceHigh, energyLow, energyHigh } = req.query;
-    var base = `WITH beta (track_name, album_id, preview)         as (SELECT name, album_id,  preview_url FROM Tracks WHERE tempo > ${tempoLow} AND tempo < ${tempoHigh} AND valence > ${valenceLow} AND valence < ${valenceHigh} AND danceability > ${danceLow} AND danceability < ${danceHigh} AND energy > ${energyLow} AND energy < ${energyHigh}),     album_named (track_name, album_name, artists_id, preview, release_date)         as (SELECT beta.track_name, Albums.name, albums.artist_id, beta.preview, albums.release_date FROM beta join Albums on beta.album_id = Albums.id),     artists_named (track_name, album_name, artists_name, preview, release_date)         as (SELECT album_named.track_name, album_named.album_name, Artists.name, album_named.preview, album_named.release_date FROM album_named join Artists on album_named.artists_id = Artists.id) SELECT * FROM artists_named;`
+    var base = `WITH beta (track_name, album_id, preview)         as (SELECT name, album_id,  preview_url FROM tracks WHERE tempo > ${tempoLow} AND tempo < ${tempoHigh} AND valence > ${valenceLow} AND valence < ${valenceHigh} AND danceability > ${danceLow} AND danceability < ${danceHigh} AND energy > ${energyLow} AND energy < ${energyHigh}),     album_named (track_name, album_name, artists_id, preview, release_date)         as (SELECT beta.track_name, albums.name, albums.artist_id, beta.preview, albums.release_date FROM beta join albums on beta.album_id = albums.id), artists_named (track_name, album_name, artists_name, preview, release_date)         as (SELECT album_named.track_name, album_named.album_name, artists.name, album_named.preview, album_named.release_date FROM album_named join artists on album_named.artists_id = artists.id) SELECT * FROM artists_named;`
 
 
 
@@ -301,7 +301,7 @@ async function getBar(req, res) {
 //Route for sending back recommended artists for Explore
 async function getBarArtist(req, res) {
     const { tempoLow, tempoHigh, valenceLow, valenceHigh, danceLow, danceHigh, energyLow, energyHigh } = req.query;
-    var aggr = `WITH getAlb(id) as (SELECT album_id FROM Tracks WHERE tempo > ${tempoLow} AND tempo < ${tempoHigh} AND valence > ${valenceLow} AND valence < ${valenceHigh} AND danceability > ${danceLow} AND danceability < ${danceHigh} AND energy > ${energyLow} AND energy < ${energyHigh}), getArt(id, counter) as (SELECT artist_id, count(*) from getAlb join albums on albums.id = getAlb.id group by getAlb.id ORDER BY count(*) DESC LIMIT 1, 5) select name, getArt.counter from getArt join artists on artists.id = getArt.id;`
+    var aggr = `WITH getAlb(id) as (SELECT album_id FROM tracks WHERE tempo > ${tempoLow} AND tempo < ${tempoHigh} AND valence > ${valenceLow} AND valence < ${valenceHigh} AND danceability > ${danceLow} AND danceability < ${danceHigh} AND energy > ${energyLow} AND energy < ${energyHigh}), getArt(id, counter) as (SELECT artist_id, count(*) from getAlb join albums on albums.id = getAlb.id group by getAlb.id ORDER BY count(*) DESC LIMIT 1, 5) select name, getArt.counter from getArt join artists on artists.id = getArt.id;`
     connection.query(aggr, function (error, results, fields) {
         if (error) {
             console.log(error)
