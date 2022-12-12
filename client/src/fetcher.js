@@ -76,6 +76,14 @@ const getRandResults = async (query) => {
         method: 'GET',
     });
     var ans = await res.json();
+    console.log(ans);
+    for (var i = 0; i < ans.results.length; i++) {
+        qString = `http://${config.server_host}:${config.server_port}/getAlbCover?songId=${ans.results[i].track_id}`;
+        const res = await fetch(qString);
+        const ans2 = await res.json();
+        ans.results[i].cover = ans2.results;
+    }
+    console.log(ans);
     return ans;
 
 }
@@ -93,6 +101,7 @@ const getBarResults = async (tempoValue, danceValue, energyValue, valenceValue) 
     console.log(qString);
     const res = await fetch(qString);
     const ans = await res.json();
+    console.log(ans.results);
     return ans.results;
 }
 const getBarArtist = async (tempoValue, danceValue, energyValue, valenceValue) => {

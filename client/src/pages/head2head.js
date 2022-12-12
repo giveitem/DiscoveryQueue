@@ -19,9 +19,9 @@ const Head2Head = (props) => {
         getRandSongs(attrs[counter]).then((res) => {
 
             setSongPair1(res);
-            console.log(res);
+            //console.log(res);
         });
-        console.log(songPair1);
+        //console.log(songPair1);
 
     }, [counter]);
 
@@ -36,12 +36,12 @@ const Head2Head = (props) => {
             setCounter(counter + 1);
             getRandResults(query).then((res) => {
                 setSongsResults(res.results);
-                console.log(res);
+                //console.log(res);
             });
         }
     }
 
-    console.log(query);
+    //console.log(query);
     return (
         <div className='head2head' >
             <h1>Head2Head</h1>
@@ -76,9 +76,11 @@ const Head2Head = (props) => {
                     <h2 style={{ color: 'white' }}> Results</h2>
                     {songsResults.map(song => (
                         <div key={song.id} className='result'>
-                            <h4 style={{ color: 'white' }}> {song.track_name} </h4>
+                            <h3 style={{ color: 'white' }}> {song.track_name} </h3>
                             <h5 style={{ color: 'white' }}> By: {song.artist_name} </h5>
                             <a href={`https://open.spotify.com/track/${song.track_id}`} class="btn  btn-link" target="_blank">Go Listen on Spotify</a>
+                            <div></div>
+                            <img src={song.cover} alt="Cover" />
                             <div> </div>
                             <audio controls>
                                 <source src={song.preview} type="audio/mpeg" />
