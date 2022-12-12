@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 // import './Five4Five.css';
 import { getSearchSongs, getSongResults } from '../fetcher.js'
 import * as React from 'react';
@@ -13,7 +13,6 @@ import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
 
 
-import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
 
 const columns = [
@@ -126,8 +125,9 @@ const Five4Five = (props) => {
         let selected = [];
         for (let i = 0; i < 5; i++) {
             getSongResults(songIds[i]).then(res => {
-
-                selected.push(res[0]);
+                if (res.length > 0) {
+                    selected.push(res[0]);
+                }
             });
         }
         console.log(selected);

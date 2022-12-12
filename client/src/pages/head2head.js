@@ -76,9 +76,12 @@ const Head2Head = (props) => {
                     <h2 style={{ color: 'white' }}> Results</h2>
                     {songsResults.map(song => (
                         <div key={song.id} className='result'>
-                            <h4 style={{ color: 'white' }}> {song.name} </h4>
+                            <h4 style={{ color: 'white' }}> {song.track_name} </h4>
+                            <h5 style={{ color: 'white' }}> By: {song.artist_name} </h5>
+                            <a href={`https://open.spotify.com/track/${song.track_id}`} class="btn  btn-link" target="_blank">Go Listen on Spotify</a>
+                            <div> </div>
                             <audio controls>
-                                <source src={song.preview_url} type="audio/mpeg" />
+                                <source src={song.preview} type="audio/mpeg" />
                             </audio>
                         </div>
                     ))}

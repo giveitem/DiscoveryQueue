@@ -12,7 +12,7 @@ const connection = mysql.createConnection({
 connection.connect();
 
 
-//////////////////////////////////////////////////
+//////////////////////SPOTIFY API//////////////////////
 const SpotifyWebApi = require('spotify-web-api-node');
 var spotifyApi = new SpotifyWebApi();
 var client_id = 'f48056d142d3469bb32b209af9fdd3ed';
@@ -44,42 +44,22 @@ function stopFunction() {
     clearInterval(myVar);
 }
 ////////////////////////////////////////////////////////////////////////
-// ********************************************
-//            SIMPLE ROUTE EXAMPLE
-// ********************************************
 
-// Route 1 (handler)
-async function hello(req, res) {
-    // a GET request to /hello
-    connection.query(`SELECT Name, Id FROM Tracks where danceability >0.32 and danceability < 0.33 LIMIT 10`, function (error, results, fields) {
-        if (error) {
-            console.log(error)
-            res.json({ error: error })
-        } else if (results) {
-            res.json({ results: results })
-        }
-    });
 
-}
+
 
 // Search route for Five4Five
 async function search(req, res) {
     console.log(req.query)
     let query = "";
     if (req.query.songName && !req.query.artistName) {
-        query += "WITH tracks_alb (track_name, alb_id, track_id) as (SELECT name, album_id, id from tracks),     tracks_alb_art_id (track_name, t_id, art_id, al_name, al_date) as (SELECT tracks_alb.track_name, tracks_alb.track_id, artist_id, albums.name, albums.release_date  from tracks_alb join albums on tracks_alb.alb_id = albums.id),     tracks_alb_art_na (track_name, t_id, gen_id, al_name, al_date) as (SELECT tracks_alb_art_id.track_name, tracks_alb_art_id.t_id, artists.name, tracks_alb_art_id.al_name, tracks_alb_art_id.al_date from tracks_alb_art_id join artists on tracks_alb_art_id.art_id = artists.id)  select track_name as name, gen_id as artists_name, t_id, al_name as album, al_date as date from tracks_alb_art_na where track_name like '%" + req.query.songName + "%';"
+        query += "WITH tracks_alb (track_name, alb_id, track_id) as (SELECT name, album_id, id from tracks),     tracks_alb_art_id (track_name, t_id, art_id, al_name, al_date) as (SELECT tracks_alb.track_name, tracks_alb.track_id, artist_id, albums.name, albums.release_date  from tracks_alb join albums on tracks_alb.alb_id = albums.id), tracks_alb_art_na (track_name, t_id, gen_id, al_name, al_date) as (SELECT tracks_alb_art_id.track_name, tracks_alb_art_id.t_id, artists.name, tracks_alb_art_id.al_name, tracks_alb_art_id.al_date from tracks_alb_art_id join artists on tracks_alb_art_id.art_id = artists.id)  select track_name as name, gen_id as artists_name, t_id, al_name as album, al_date as date from tracks_alb_art_na where track_name like '%" + req.query.songName + "%';"
     } else if (!req.query.songName && req.query.artistName) {
         query += "WITH tracks_alb (track_name, alb_id, track_id) as (SELECT name, album_id, id from tracks),     tracks_alb_art_id (track_name, t_id, art_id, al_name, al_date) as (SELECT tracks_alb.track_name, tracks_alb.track_id, artist_id, albums.name, albums.release_date  from tracks_alb join albums on tracks_alb.alb_id = albums.id),     tracks_alb_art_na (track_name, t_id, gen_id, al_name, al_date) as (SELECT tracks_alb_art_id.track_name, tracks_alb_art_id.t_id, artists.name, tracks_alb_art_id.al_name, tracks_alb_art_id.al_date from tracks_alb_art_id join artists on tracks_alb_art_id.art_id = artists.id)  select track_name as name, gen_id as artists_name, t_id, al_name as album, al_date as date from tracks_alb_art_na where gen_id like '%" + req.query.artistName + "%';"
         // query += "WITH artist_ids (track_id, art_id, art_name) as         (SELECT track_id, id,name from artists WHERE name LIKE '%" + req.query.artistName + "%')  SELECT tracks.name as name, artist_ids.art_name as artists_name from artist_ids join tracks on artist_ids.track_id = tracks.id;";
     } else if (req.query.songName && req.query.artistName) {
         query += "WITH tracks_alb (track_name, alb_id, track_id) as (SELECT name, album_id, id from tracks),     tracks_alb_art_id (track_name, t_id, art_id, al_name, al_date) as (SELECT tracks_alb.track_name, tracks_alb.track_id, artist_id, albums.name, albums.release_date  from tracks_alb join albums on tracks_alb.alb_id = albums.id),     tracks_alb_art_na (track_name, t_id, gen_id, al_name, al_date) as (SELECT tracks_alb_art_id.track_name, tracks_alb_art_id.t_id, artists.name, tracks_alb_art_id.al_name, tracks_alb_art_id.al_date from tracks_alb_art_id join artists on tracks_alb_art_id.art_id = artists.id)  select track_name as name, gen_id as artists_name, t_id, al_name as album, al_date as date from tracks_alb_art_na where gen_id like '%" + req.query.artistName + "%' and track_name like '%" + req.query.songName + "%';"
-        // query += "WITH artist_ids (track_id, art_id, art_name) as         (SELECT track_id, id,name from artists WHERE name LIKE '%" + req.query.artistName + "%')  SELECT tracks.name as name, artist_ids.art_name as artists_name from artist_ids join tracks on artist_ids.track_id = tracks.id WHERE tracks.name LIKE '%" + req.query.songName + "%';";
     }
-    // let base = "SELECT name, id,artists_id FROM Tracks WHERE name LIKE '%" + req.query.name + "%';";
-    // let page = req.query.page ? req.query.page : 1;
-    // let pagesize = req.query.pagesize ? req.query.pagesize : 10;
-    // let offset = (page - 1) * pagesize;
-    // let limit = " LIMIT " + pagesize + " OFFSET " + offset;
 
     console.log(query);
     connection.query(query, function (error, results, fields) {
@@ -246,41 +226,46 @@ async function random(req, res) {
 
 //Route for sending back result for Head2Head
 async function sendRandom(req, res) {
-    var base = "SELECT name, id,preview_url FROM Tracks WHERE ";
+    var prefix = "WITH selected_tracks (name,id,album_id,preview) as(";
+    var base = "SELECT name, id, album_id, preview_url FROM Tracks WHERE ";
 
     //valence
     if (req.query.valence == "high") {
-        base += "valence > 0.7 AND valence < 0.95 AND ";
+        base += "valence > 0.59 AND valence < 0.95 AND ";
     } else {
-        base += "valence > 0.15 AND valence < 0.32 AND ";
+        base += "valence > 0.15 AND valence < 0.55 AND ";
     }
     //danceability
     if (req.query.danceability == "high") {
-        base += "danceability > 0.7 AND danceability < 0.95 AND ";
+        base += "danceability > 0.59 AND danceability < 0.95 AND ";
     } else {
-        base += "danceability > 0.3 AND danceability < 0.5 AND ";
+        base += "danceability > 0.15 AND danceability < 0.5 AND ";
     }
     //energy
     if (req.query.energy == "high") {
-        base += "energy > 0.83 AND energy < 0.95 AND ";
+        base += "energy > 0.7 AND energy < 0.95 AND ";
 
     } else {
-        base += "energy > 0.2 AND energy < 0.4 AND ";
+        base += "energy > 0.2 AND energy < 0.59 AND ";
     }
     //acousticness
     if (req.query.acousticness == "high") {
-        base += "acousticness > 0.7 AND acousticness < 0.9 AND ";
+        base += "acousticness > 0.5 AND acousticness < 0.9 AND ";
     } else {
-        base += "acousticness > 0.2 AND acousticness < 0.4 AND ";
+        base += "acousticness > 0.15 AND acousticness < 0.45 AND ";
     }
 
     //tempo
     if (req.query.tempo == "high") {
-        base += "tempo > 140 AND tempo < 178 ORDER BY RAND() LIMIT 5;";
+        base += "tempo > 111 AND tempo < 178 ORDER BY RAND() LIMIT 5";
     } else {
-        base += "tempo > 74 AND tempo < 88 ORDER BY RAND() LIMIT 5;";
+        base += "tempo > 74 AND tempo < 110 ORDER BY RAND() LIMIT 5";
     }
-    connection.query(base, function (error, results, fields) {
+    var postfix = "), selected_artist (name,id, preview, artist_id)     as ( SELECT selected_tracks.name, selected_tracks.id, selected_tracks.preview, artist_id FROM albums join selected_tracks on selected_tracks.album_id = albums.id) select selected_artist.name as track_name, selected_artist.id as track_id, selected_artist.preview as preview, artists.name as artist_name from artists join selected_artist on selected_artist.artist_id = artists.id;"
+    var finalQuery = prefix + base + postfix;
+
+    console.log(finalQuery);
+    connection.query(finalQuery, function (error, results, fields) {
         if (error) {
             console.log(error)
             res.json({ error: error })
@@ -294,7 +279,7 @@ async function sendRandom(req, res) {
 //Route for sending back result for Explore
 async function getBar(req, res) {
     const { tempoLow, tempoHigh, valenceLow, valenceHigh, danceLow, danceHigh, energyLow, energyHigh } = req.query;
-    var base = `with beta (track_name, album_id, artists_id, preview) as (SELECT name, album_id, artists_id, preview_url FROM Tracks WHERE tempo > ${tempoLow} AND tempo < ${tempoHigh} AND valence > ${valenceLow} AND valence < ${valenceHigh} AND danceability > ${danceLow} AND danceability < ${danceHigh} AND energy > ${energyLow} AND energy < ${energyHigh}), album_named (track_name, album_name, artists_id, preview, release_date) as (SELECT beta.track_name, Albums.name, beta.artists_id, beta.preview, albums.release_date FROM beta join Albums on beta.album_id = Albums.id), artists_named (track_name, album_name, artists_name, preview, release_date) as (SELECT album_named.track_name, album_named.album_name, Artists.name, album_named.preview, album_named.release_date FROM album_named join Artists on album_named.artists_id = Artists.id)  SELECT * FROM artists_named;`
+    var base = `WITH beta (track_name, album_id, preview)         as (SELECT name, album_id,  preview_url FROM Tracks WHERE tempo > ${tempoLow} AND tempo < ${tempoHigh} AND valence > ${valenceLow} AND valence < ${valenceHigh} AND danceability > ${danceLow} AND danceability < ${danceHigh} AND energy > ${energyLow} AND energy < ${energyHigh}),     album_named (track_name, album_name, artists_id, preview, release_date)         as (SELECT beta.track_name, Albums.name, albums.artist_id, beta.preview, albums.release_date FROM beta join Albums on beta.album_id = Albums.id),     artists_named (track_name, album_name, artists_name, preview, release_date)         as (SELECT album_named.track_name, album_named.album_name, Artists.name, album_named.preview, album_named.release_date FROM album_named join Artists on album_named.artists_id = Artists.id) SELECT * FROM artists_named;`
 
 
 
@@ -314,7 +299,7 @@ async function getBar(req, res) {
 //Route for sending back recommended artists for Explore
 async function getBarArtist(req, res) {
     const { tempoLow, tempoHigh, valenceLow, valenceHigh, danceLow, danceHigh, energyLow, energyHigh } = req.query;
-    var aggr = `WITH getArtist(id)  as (SELECT artists_id FROM Tracks WHERE tempo > ${tempoLow} AND tempo < ${tempoHigh} AND valence > ${valenceLow} AND valence < ${valenceHigh} AND danceability > ${danceLow} AND danceability < ${danceHigh} AND energy > ${energyLow} AND energy < ${energyHigh} group by artists_id ORDER BY count(*) DESC LIMIT 1, 5) select name, artists.id as artist_id from artists join getArtist on artists.id = getArtist.id;`
+    var aggr = `WITH getAlb(id) as (SELECT album_id FROM Tracks WHERE tempo > ${tempoLow} AND tempo < ${tempoHigh} AND valence > ${valenceLow} AND valence < ${valenceHigh} AND danceability > ${danceLow} AND danceability < ${danceHigh} AND energy > ${energyLow} AND energy < ${energyHigh}), getArt(id, counter) as (SELECT artist_id, count(*) from getAlb join albums on albums.id = getAlb.id group by getAlb.id ORDER BY count(*) DESC LIMIT 1, 5) select name, getArt.counter from getArt join artists on artists.id = getArt.id;`
     connection.query(aggr, function (error, results, fields) {
         if (error) {
             console.log(error)
@@ -345,7 +330,6 @@ async function getAlbCover(req, res) {
 }
 
 module.exports = {
-    hello,
     random,
     search,
     sendRandom,
