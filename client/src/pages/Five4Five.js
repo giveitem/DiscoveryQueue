@@ -11,6 +11,7 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
+import { Audio } from 'react-loader-spinner';
 
 
 import Button from '@mui/material/Button';
@@ -106,7 +107,7 @@ const Five4Five = (props) => {
             .then(res => {
                 setSongsResults(res.results);
                 setLoadingSongs(false);
-                console.log(songsResults);
+                //console.log(songsResults);
             });
     };
 
@@ -125,24 +126,43 @@ const Five4Five = (props) => {
         let selected = [];
         for (let i = 0; i < 5; i++) {
             getSongResults(songIds[i]).then(res => {
+                setLoadingSongs(true);
                 if (res.length > 0) {
                     selected.push(res[0]);
                 }
             });
         }
-        console.log(selected);
-        timeout(400).then(res => {
+        //console.log(selected);
+        timeout(550).then(res => {
             setSongMatchedResults(selected);
+            setLoadingSongs(false);
         }
         )
-
     }
 
 
     return (
         <div className='HomePage' >
             <h1>Five4Five</h1>
+            {(loadingSongs === true) && <div
+                style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    height: '100',
+                    width: '100',
+                    color: 'white'
+                }}> <Audio
+                    height="100"
+                    width="100"
+                    color="#4fa94d"
+                    ariaLabel="audio-loading"
+                    wrapperStyle={{}}
+                    wrapperClass="wrapper-class"
+                    visible={true}
+                    justifyContent="center"
 
+                />Loading...</div>}
             <div className='five-search'>
                 <label name="five-submit">Song Name</label>
                 <input type='text' name="five-submit" placeholder="Song Name" onChange={(event) => setSearch(event.target.value)} />

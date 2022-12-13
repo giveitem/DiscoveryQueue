@@ -2,8 +2,11 @@ import { useState, useEffect } from 'react';
 import { getRandSongs, getRandResults } from '../fetcher.js'
 import Button from '@mui/material/Button';
 import './Head2Head.css';
+import { Audio } from 'react-loader-spinner';
 
 const Head2Head = (props) => {
+
+    const [loadingSongs, setLoadingSongs] = useState(false);
     const [songsResults, setSongsResults] = useState(null);
     const [songPair1, setSongPair1] = useState([]);
     const [counter, setCounter] = useState(0);
@@ -15,14 +18,13 @@ const Head2Head = (props) => {
 
 
     useEffect(() => {
-
+        setLoadingSongs(true);
         getRandSongs(attrs[counter]).then((res) => {
-
             setSongPair1(res);
             //console.log(res);
+            setLoadingSongs(false);
         });
         //console.log(songPair1);
-
     }, [counter]);
 
 
@@ -34,9 +36,11 @@ const Head2Head = (props) => {
             setQuery([...query, highlow]);
         } else {
             setCounter(counter + 1);
+            setLoadingSongs(true);
             getRandResults(query).then((res) => {
                 setSongsResults(res.results);
                 //console.log(res);
+                setLoadingSongs(false);
             });
         }
     }
@@ -45,7 +49,26 @@ const Head2Head = (props) => {
     return (
         <div className='head2head' >
             <h1>Head2Head</h1>
-            <h4>{attrs[counter]}</h4>
+            {(loadingSongs === true) && <div
+                style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    height: '100',
+                    width: '100',
+                    color: 'white'
+                }}> <Audio
+                    height="100"
+                    width="100"
+                    color="#4fa94d"
+                    ariaLabel="audio-loading"
+                    wrapperStyle={{}}
+                    wrapperClass="wrapper-class"
+                    visible={true}
+                    justifyContent="center"
+
+                />Loading....</div>}
+            {/* <h4>{attrs[counter]}</h4> */}
             {counter < 5 && songPair1[0] &&
                 <div>
                     <div className="eachSong">

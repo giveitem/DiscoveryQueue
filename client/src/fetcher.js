@@ -13,7 +13,7 @@ const getSearchSongs = async (songName, artistName) => {
         method: 'GET',
     })
     var ans = await res.json()
-    console.log(ans)
+    //console.log(ans)
     return ans;
 }
 const getSongResults = async (songId) => {
@@ -71,19 +71,19 @@ const getRandResults = async (query) => {
     } else {
         qString += `tempo=low`;
     }
-    console.log(qString)
+    //console.log(qString)
     var res = await fetch(qString, {
         method: 'GET',
     });
     var ans = await res.json();
-    console.log(ans);
+    //console.log(ans);
     for (var i = 0; i < ans.results.length; i++) {
         qString = `http://${config.server_host}:${config.server_port}/getAlbCover?songId=${ans.results[i].track_id}`;
         const res = await fetch(qString);
         const ans2 = await res.json();
         ans.results[i].cover = ans2.results;
     }
-    console.log(ans);
+    //console.log(ans);
     return ans;
 
 }
@@ -98,10 +98,10 @@ const getBarResults = async (tempoValue, danceValue, energyValue, valenceValue) 
     qString += `energyHigh=${energyValue[1] / 100}&`;
     qString += `valenceHigh=${valenceValue[1] / 100}`;
 
-    console.log(qString);
+    //console.log(qString);
     const res = await fetch(qString);
     const ans = await res.json();
-    console.log(ans.results);
+    //console.log(ans.results);
     return ans.results;
 }
 const getBarArtist = async (tempoValue, danceValue, energyValue, valenceValue) => {
@@ -115,14 +115,14 @@ const getBarArtist = async (tempoValue, danceValue, energyValue, valenceValue) =
     qString += `energyHigh=${energyValue[1] / 100}&`;
     qString += `valenceHigh=${valenceValue[1] / 100}`;
 
-    console.log(qString);
+    //console.log(qString);
     const res = await fetch(qString);
     const ans = await res.json();
     return ans.results;
 }
 const getAlbCover = async (songId) => {
     let qString = `http://${config.server_host}:${config.server_port}/getAlbCover?songId=${songId}`;
-    console.log(qString);
+    //console.log(qString);
     const res = await fetch(qString);
     const ans = await res.json();
 
