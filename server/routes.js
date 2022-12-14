@@ -50,7 +50,7 @@ function stopFunction() {
 
 // Search route for Five4Five
 async function search(req, res) {
-    console.log(req.query)
+    //console.log(req.query)
     let query = "";
     if (req.query.songName && !req.query.artistName) {
         query += "WITH tracks_alb (track_name, alb_id, track_id) as (SELECT name, album_id, id from tracks where name like '%" + req.query.songName + "%'),  tracks_alb_art_id (track_name, t_id, art_id, al_name, al_date) as (SELECT tracks_alb.track_name, tracks_alb.track_id, artist_id, albums.name, albums.release_date  from tracks_alb join albums on tracks_alb.alb_id = albums.id), tracks_alb_art_na (track_name, t_id, gen_id, al_name, al_date) as (SELECT tracks_alb_art_id.track_name, tracks_alb_art_id.t_id, artists.name, tracks_alb_art_id.al_name, tracks_alb_art_id.al_date from tracks_alb_art_id join artists on tracks_alb_art_id.art_id = artists.id)  select track_name as name, gen_id as artists_name, t_id, al_name as album, al_date as date from tracks_alb_art_na;"
@@ -290,7 +290,7 @@ async function getBar(req, res) {
             res.json({ error: error })
         }
         else if (results) {
-            console.log(base);
+            //console.log(base);
             res.json({ results: results })
         }
     });
