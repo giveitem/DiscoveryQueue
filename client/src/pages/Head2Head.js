@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
 import { getRandSongs, getRandResults } from '../fetcher.js'
 import Button from '@mui/material/Button';
-import './Head2Head.css';
 import { Audio } from 'react-loader-spinner';
 
 const Head2Head = (props) => {
@@ -48,7 +47,9 @@ const Head2Head = (props) => {
     //console.log(query);
     return (
         <div className='head2head' >
-            <h1>Head2Head</h1>
+
+
+
             {(loadingSongs === true) && <div
                 style={{
                     display: 'flex',
@@ -68,46 +69,65 @@ const Head2Head = (props) => {
                     justifyContent="center"
 
                 />Loading....</div>}
+
             {/* <h4>{attrs[counter]}</h4> */}
             {counter < 5 && songPair1[0] &&
-                <div>
-                    <div className="eachSong">
-                        <div key={songPair1[0].song.id} >
-                            <h3 style={{ color: 'white' }}> {songPair1[0].song.name} </h3>
-                            <audio controls>
-                                <source src={songPair1[0].song.preview_url} type="audio/mpeg" />
-                            </audio>
-                        </div>
-                        <img src={songPair1[0].cover} alt="Cover" />
-                        <Button onClick={() => handleClick("high")}>Select</Button>
-                    </div>
 
-                    <div className="eachSong">
-                        <div key={songPair1[1].song.id} >
-                            <h3 style={{ color: 'white' }}> {songPair1[1].song.name} </h3>
-                            <audio controls>
-                                <source src={songPair1[1].song.preview_url} type="audio/mpeg" />
-                            </audio>
-                        </div>
-                        <img src={songPair1[1].cover} alt="Cover" />
-                        <Button onClick={() => handleClick("low")}>Select</Button>
+                <div>
+                    <h1>Head2Head</h1>
+                    <p style={{ color: 'white' }}>Round {counter + 1} out of 5, select the one you prefer</p>
+                    <div className='head-container'>
+
+                        <div>
+                            <div className='head-card'>
+                                <div key={songPair1[0].song.id} >
+                                    <h5 style={{ color: 'white' }}> {songPair1[0].song.name} </h5>
+                                    <audio controls>
+                                        <source src={songPair1[0].song.preview_url} type="audio/mpeg" />
+                                    </audio>
+                                </div>
+                                <img src={songPair1[0].cover} width="90%" alt="Cover" />
+                                <br></br>
+                                <Button onClick={() => handleClick("high")}>Select</Button>
+                            </div>
+                            <div className='head-card'>
+                                <div key={songPair1[1].song.id} >
+                                    <h5 style={{ color: 'white' }}> {songPair1[1].song.name} </h5>
+                                    <audio controls>
+                                        <source src={songPair1[1].song.preview_url} type="audio/mpeg" />
+                                    </audio>
+                                </div>
+                                <img src={songPair1[1].cover} width="90%" alt="Cover" />
+                                <br></br>
+                                <Button onClick={() => handleClick("low")}>Select</Button>
+                            </div>
+                        </div >
                     </div>
-                </div >
+                </div>
             }
             {songsResults &&
                 <div>
-                    <h2 style={{ color: 'white' }}> Results</h2>
+                    <h1>Head2Head Results</h1>
+                    {/* <h2 style={{ color: 'white' }}> Results</h2> */}
                     {songsResults.map(song => (
-                        <div key={song.id} className='result'>
-                            <h3 style={{ color: 'white' }}> {song.track_name} </h3>
-                            <h5 style={{ color: 'white' }}> By: {song.artist_name} </h5>
-                            <a href={`https://open.spotify.com/track/${song.track_id}`} class="btn  btn-link" target="_blank">Go Listen on Spotify</a>
-                            <div></div>
-                            <audio controls>
-                                <source src={song.preview} type="audio/mpeg" />
-                            </audio>
-                            <div></div>
-                            <img src={song.cover} alt="Cover" />
+                        <div class="head-result-container">
+                            <div class="head-result">
+                                <div key={song.id} className='result'>
+                                    <div class="head-result-col1">
+                                        <img src={song.cover} height="80px" alt="Cover" />
+                                    </div>
+                                    <div class="head-result-col2">
+                                        <h5 style={{ color: 'white' }}> {song.track_name} </h5>
+                                        <p style={{ color: 'white' }}> By: {song.artist_name} </p>
+                                    </div>
+                                    <div class="head-result-col3">
+                                        <audio controls height="90px">
+                                            <source src={song.preview} type="audio/mpeg" />
+                                        </audio>
+                                        <a href={`https://open.spotify.com/track/${song.track_id}`} class="btn  btn-link" target="_blank">Listen on Spotify</a>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     ))}
                 </div>

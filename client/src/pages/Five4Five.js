@@ -282,4 +282,4 @@ const Five4Five = (props) => {
     );
 }
 
-
+export default Five4Five;
