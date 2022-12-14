@@ -121,7 +121,7 @@ const Five4Five = (props) => {
     }
 
     const getResults = () => {
-
+        let arr = [0, 0, 0, 0, 0];
         let songIds = selectedSongs.map(song => song.t_id);
         let selected = [];
         for (let i = 0; i < 5; i++) {
@@ -130,14 +130,27 @@ const Five4Five = (props) => {
                 if (res.length > 0) {
                     selected.push(res[0]);
                 }
+                arr[i] = 1;
             });
         }
         //console.log(selected);
-        timeout(550).then(res => {
-            setSongMatchedResults(selected);
-            setLoadingSongs(false);
+        // timeout(550).then(res => {
+        //     setSongMatchedResults(selected);
+        //     setLoadingSongs(false);
+        // })
+        let myVar = setInterval(function () { timer() }, 550);
+        function timer() {
+            let sum = 0;
+            for (let i = 0; i < 5; i++) {
+                sum += arr[i];
+            }
+            if (sum === 5) {
+                setSongMatchedResults(selected);
+                setLoadingSongs(false);
+                clearInterval(myVar);
+            }
         }
-        )
+
     }
 
 
