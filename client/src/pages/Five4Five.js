@@ -1,5 +1,4 @@
 import { useState } from 'react';
-// import './Five4Five.css';
 import { getSearchSongs, getSongResults } from '../fetcher.js'
 import * as React from 'react';
 import Paper from '@mui/material/Paper';
@@ -12,7 +11,6 @@ import TableHead from '@mui/material/TableHead';
 import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
 import { Audio } from 'react-loader-spinner';
-
 
 import Button from '@mui/material/Button';
 
@@ -61,21 +59,9 @@ const Five4Five = (props) => {
         },
     }));
 
-    const StyledTableRow = styled(TableRow)(({ theme }) => ({
-        '&:nth-of-type(odd)': {
-            backgroundColor: theme.palette.action.hover,
-        },
-        // hide last border
-        '&:last-child td, &:last-child th': {
-            border: 0,
-        },
-    }));
-
-
-
-    function timeout(delay) {
-        return new Promise(res => setTimeout(res, delay));
-    }
+    // function timeout(delay) {
+    //     return new Promise(res => setTimeout(res, delay));
+    // }
 
 
     const handleChangePage = (event, newPage) => {

@@ -38,13 +38,11 @@ const Head2Head = (props) => {
             setLoadingSongs(true);
             getRandResults(query).then((res) => {
                 setSongsResults(res.results);
-                //console.log(res);
                 setLoadingSongs(false);
             });
         }
     }
 
-    //console.log(query);
     return (
         <div className='head2head' >
 

@@ -94,13 +94,10 @@ export default function Explore() {
             });
         getBarArtist(tempoValue, danceValue, energyValue, valenceValue)
             .then(res => {
-                //console.log("artist fired");
                 setArtistResults(res);
             });
     };
-    // useEffect(() => {
-    //     console.log(loadingSongs);
-    // }, [loadingSongs]);
+
 
     const columns = [
         { id: 'track_name', label: 'Track Name', minWidth: 170 },

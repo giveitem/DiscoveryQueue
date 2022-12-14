@@ -5,13 +5,13 @@ import Head2Head from './pages/Head2Head';
 import Explore from './pages/Explore';
 import HomePage from './pages/HomePage';
 import { BrowserRouter, Route } from 'react-router-dom';
-import BasicExample from './components/BasicExample';
+import BlackBar from './components/BlackBar';
 import Footer from './components/Footer';
 function App() {
   return (
     <div className="App">
       <div className="Header">
-        <BasicExample />
+        <BlackBar />
       </div>
       <div className="Main">
         <BrowserRouter>

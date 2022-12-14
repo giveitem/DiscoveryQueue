@@ -4,7 +4,7 @@ import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import white from '../public/dq_white.png';
 
-function BasicExample() {
+function BlackBar() {
     return (
         <Navbar bg="dark" expand="lg" variant="dark">
             <Container>
@@ -29,4 +29,4 @@ function BasicExample() {
     );
 }
 
-export default BasicExample;
+export default BlackBar;

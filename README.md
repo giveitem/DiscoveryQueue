@@ -23,6 +23,8 @@ This is also an entry to CIS550(Database and Information Systems)'s final projec
 
 2. To build the server part of this project, first go into the server directory using the `cd server` command. After which run `npm install`. After your installed all the required packages, run `npm start` to start the server.
 
-3. To build the client part of this project, first go into the client directory using `cd client`. After with run `npm install`. After your installed all the required packages, run `npm start` to start the client.
+3. Under the server directory, create a `config.json` file with appropriate credentials 
 
-4. If you are using our configuration, go visit localhost:8080 to use our app. Have fun!
+4. To build the client part of this project, first go into the client directory using `cd client`. After witch run `npm install`. After your installed all the required packages, run `npm start` to start the client.
+
+5. If you are using our configuration, go visit localhost:3000 to use our app. Have fun!
