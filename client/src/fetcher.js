@@ -13,11 +13,11 @@ const getSearchSongs = async (songName, artistName) => {
         method: 'GET',
     })
     var ans = await res.json()
-    console.log(ans)
+    //console.log(ans)
     return ans;
 }
-const getSongResults = async (songNames) => {
-    let qString = `http://${config.server_host}:${config.server_port}/getSongs?songName=${songNames}`;
+const getSongResults = async (songId) => {
+    let qString = `http://${config.server_host}:${config.server_port}/getSongs?songId=${songId}`;
     console.log(qString);
     const res = await fetch(qString);
     const ans = await res.json();
@@ -29,13 +29,19 @@ const getRandSongs = async (attr) => {
 
     const highres = await fetch(`http://${config.server_host}:${config.server_port}/random?attr=${attr}&endpoint=high`);
     const highans = await highres.json();
-    songArray.push(highans.results[0]);
+    let qString = `http://${config.server_host}:${config.server_port}/getAlbCover?songId=${highans.results[0].id}`;
+    let res = await fetch(qString);
+    let ans = await res.json();
+
+    songArray.push({ song: highans.results[0], cover: ans.results });
+
 
     const lowres = await fetch(`http://${config.server_host}:${config.server_port}/random?attr=${attr}&endpoint=low`);
     const lowans = await lowres.json();
-    songArray.push(lowans.results[0]);
-
-
+    qString = `http://${config.server_host}:${config.server_port}/getAlbCover?songId=${lowans.results[0].id}`;
+    res = await fetch(qString);
+    ans = await res.json();
+    songArray.push({ song: lowans.results[0], cover: ans.results });
     return songArray;
 }
 const getRandResults = async (query) => {
@@ -65,11 +71,19 @@ const getRandResults = async (query) => {
     } else {
         qString += `tempo=low`;
     }
-    console.log(qString)
+    //console.log(qString)
     var res = await fetch(qString, {
         method: 'GET',
     });
     var ans = await res.json();
+    //console.log(ans);
+    for (var i = 0; i < ans.results.length; i++) {
+        qString = `http://${config.server_host}:${config.server_port}/getAlbCover?songId=${ans.results[i].track_id}`;
+        const res = await fetch(qString);
+        const ans2 = await res.json();
+        ans.results[i].cover = ans2.results;
+    }
+    //console.log(ans);
     return ans;
 
 }
@@ -84,9 +98,35 @@ const getBarResults = async (tempoValue, danceValue, energyValue, valenceValue) 
     qString += `energyHigh=${energyValue[1] / 100}&`;
     qString += `valenceHigh=${valenceValue[1] / 100}`;
 
-    console.log(qString);
+    //console.log(qString);
+    const res = await fetch(qString);
+    const ans = await res.json();
+    //console.log(ans.results);
+    return ans.results;
+}
+const getBarArtist = async (tempoValue, danceValue, energyValue, valenceValue) => {
+    let qString = `http://${config.server_host}:${config.server_port}/getBarArtist?`;
+    qString += `tempoLow=${tempoValue[0]}&`;
+    qString += `danceLow=${danceValue[0] / 100}&`;
+    qString += `energyLow=${energyValue[0] / 100}&`;
+    qString += `valenceLow=${valenceValue[0] / 100}&`;
+    qString += `tempoHigh=${tempoValue[1]}&`;
+    qString += `danceHigh=${danceValue[1] / 100}&`;
+    qString += `energyHigh=${energyValue[1] / 100}&`;
+    qString += `valenceHigh=${valenceValue[1] / 100}`;
+
+    //console.log(qString);
     const res = await fetch(qString);
     const ans = await res.json();
     return ans.results;
 }
-export { getSearchSongs, getRandSongs, getRandResults, getBarResults, getSongResults }
+const getAlbCover = async (songId) => {
+    let qString = `http://${config.server_host}:${config.server_port}/getAlbCover?songId=${songId}`;
+    //console.log(qString);
+    const res = await fetch(qString);
+    const ans = await res.json();
+
+    return ans.results;
+
+}
+export { getSearchSongs, getRandSongs, getRandResults, getBarResults, getSongResults, getBarArtist, getAlbCover }

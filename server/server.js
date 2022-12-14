@@ -11,14 +11,14 @@ const app = express();
 // whitelist localhost 3000
 app.use(cors({ credentials: true, origin: ['http://localhost:3000'] }));
 
-// Route 1 - register as GET 
-app.get('/', routes.hello);
+// Routes
 app.get('/search', routes.search);
 app.get('/random', routes.random);
 app.get('/getRandom', routes.sendRandom);
 app.get('/getBars', routes.getBar);
+app.get('/getBarArtist', routes.getBarArtist);
 app.get('/getSongs', routes.getSearchResult);
-
+app.get('/getAlbCover', routes.getAlbCover);
 app.listen(config.server_port, () => {
     console.log(`Server running at http://${config.server_host}:${config.server_port}/`);
 });

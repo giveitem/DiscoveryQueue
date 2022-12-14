@@ -1,9 +1,5 @@
-<<<<<<< Updated upstream:client/src/pages/five4five.js
-import { useState, useEffect } from 'react';
-// import './Five4Five.css';
-=======
 import { useState } from 'react';
->>>>>>> Stashed changes:client/src/pages/Five4Five.js
+// import './Five4Five.css';
 import { getSearchSongs, getSongResults } from '../fetcher.js'
 import * as React from 'react';
 import Paper from '@mui/material/Paper';
@@ -15,9 +11,9 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
+import { Audio } from 'react-loader-spinner';
 
 
-import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
 
 const columns = [
@@ -111,7 +107,7 @@ const Five4Five = (props) => {
             .then(res => {
                 setSongsResults(res.results);
                 setLoadingSongs(false);
-                console.log(songsResults);
+                //console.log(songsResults);
             });
     };
 
@@ -125,22 +121,35 @@ const Five4Five = (props) => {
     }
 
     const getResults = () => {
-
+        let arr = [0, 0, 0, 0, 0];
         let songIds = selectedSongs.map(song => song.t_id);
         let selected = [];
         for (let i = 0; i < 5; i++) {
             getSongResults(songIds[i]).then(res => {
-
-                console.log(res);
-                console.log(songMatchedResults);
-                selected.push(res[0]);
+                setLoadingSongs(true);
+                if (res.length > 0) {
+                    selected.push(res[0]);
+                }
+                arr[i] = 1;
             });
         }
-        console.log(selected);
-        timeout(50).then(res => {
-            setSongMatchedResults(selected);
+        //console.log(selected);
+        // timeout(550).then(res => {
+        //     setSongMatchedResults(selected);
+        //     setLoadingSongs(false);
+        // })
+        let myVar = setInterval(function () { timer() }, 550);
+        function timer() {
+            let sum = 0;
+            for (let i = 0; i < 5; i++) {
+                sum += arr[i];
+            }
+            if (sum === 5) {
+                setSongMatchedResults(selected);
+                setLoadingSongs(false);
+                clearInterval(myVar);
+            }
         }
-        )
 
     }
 
@@ -148,13 +157,31 @@ const Five4Five = (props) => {
     return (
         <div className='HomePage' >
             <h1>Five4Five</h1>
+            {(loadingSongs === true) && <div
+                style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    height: '100',
+                    width: '100',
+                    color: 'white'
+                }}> <Audio
+                    height="100"
+                    width="100"
+                    color="#4fa94d"
+                    ariaLabel="audio-loading"
+                    wrapperStyle={{}}
+                    wrapperClass="wrapper-class"
+                    visible={true}
+                    justifyContent="center"
 
+                />Loading...</div>}
             <div className='five-search'>
                 <label name="five-submit">Song Name</label>
-            <input type='text' name="five-submit" placeholder="Song Name" onChange={(event) => setSearch(event.target.value)} />
-            <label name="five-submit">Artist Name</label>
-            <input type='text' name="five-submit" placeholder="Artist Name" onChange={(event) => setSearchA(event.target.value)} />
-            <button name="five-submit" onClick={() => updateSearchResults()} >SEARCH</button>
+                <input type='text' name="five-submit" placeholder="Song Name" onChange={(event) => setSearch(event.target.value)} />
+                <label name="five-submit">Artist Name</label>
+                <input type='text' name="five-submit" placeholder="Artist Name" onChange={(event) => setSearchA(event.target.value)} />
+                <button name="five-submit" onClick={() => updateSearchResults()} >SEARCH</button>
             </div>
 
             <div className='five-selected'>
@@ -196,7 +223,7 @@ const Five4Five = (props) => {
                     </div>
                 ))}
             </div> */}
-            <Paper sx={{ overflow: 'hidden', margin: '20px'}}>
+            <Paper sx={{ overflow: 'hidden', margin: '20px' }}>
                 <TableContainer sx={{ maxHeight: 800 }}>
                     <Table stickyHeader aria-label="sticky table">
                         <TableHead >
@@ -256,5 +283,3 @@ const Five4Five = (props) => {
 }
 
 
-
-export default Five4Five;
