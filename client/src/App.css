@@ -121,3 +121,72 @@ input[name=five-submit] {
     background-color: whitesmoke;
     margin: 20px;
 }
+
+.head-container {
+    display: flex;
+    justify-content: center;
+}
+
+.head-card {
+    /* background-color: white; */
+    float: left;
+    border-style: solid;
+    border-color: pink;
+    border-width: 4px;
+    border-radius: 20px;
+    margin: 10px;
+    width: 45%;
+    padding: 10px;
+    /* box-shadow: 0 4px 8px 0 grey; */
+    transition: 0.3s;
+}
+
+.head-card:hover {
+    box-shadow: 0 12px 20px 0 white;
+}
+
+@media (max-width: 640px) {
+    .head-card {
+        float: none;
+        width: auto;
+    }
+}
+
+.head-result-container {
+    display: flex;
+    justify-content: center;
+}
+
+.head-result {
+    transition: 0.3s;
+    margin: 10px;
+    padding: 10px;
+    float: left;
+    border-style: solid;
+    border-color: pink;
+    border-width: 4px;
+    border-radius: 20px;
+    width: 80%;
+}
+
+.head-result-col1 {
+    float: left;
+    width: 20%;
+}
+
+.head-result-col2 {
+    float: left;
+    width: 50%;
+}
+
+.head-result-col3 {
+    float: left;
+    width: 30%;
+}
+
+@media (max-width: 640px) {
+    .head-results {
+        float: none;
+        width: auto;
+    }
+}

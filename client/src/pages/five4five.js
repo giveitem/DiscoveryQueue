@@ -1,5 +1,9 @@
+<<<<<<< Updated upstream:client/src/pages/five4five.js
 import { useState, useEffect } from 'react';
 // import './Five4Five.css';
+=======
+import { useState } from 'react';
+>>>>>>> Stashed changes:client/src/pages/Five4Five.js
 import { getSearchSongs, getSongResults } from '../fetcher.js'
 import * as React from 'react';
 import Paper from '@mui/material/Paper';
