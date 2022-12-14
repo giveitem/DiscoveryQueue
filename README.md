@@ -12,7 +12,7 @@ This is also an entry to CIS550(Database and Information Systems)'s final projec
 - Enter your five favorite songs using our search page, and we'll pull five songs that match your interest and taste!
 
 2. Head2Head
-- A Buzzfeed style quiz to find your new favourite songs.
+- A Buzzfeed style pair quiz to find your new favourite songs.
 
 3. Explorer 
 - Search songs based on key musicality attributes including valence, intrumentalness, time signature, energy, danceability. Also get suggested musicians based on those attributes.
