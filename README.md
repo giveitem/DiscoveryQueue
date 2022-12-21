@@ -26,3 +26,10 @@ This is also an entry to CIS550(Database and Information Systems)'s final projec
 4. To build the client part of this project, first go into the client directory using `cd client`. After witch run `npm install`. After your installed all the required packages, run `npm start` to start the client.
 
 5. If you are using our configuration, go visit localhost:3000 to use our app. Have fun!
+
+## Try It Out
+This project is built with React, Express.js, and MySQL.
+
+Please try the live demo [here](https://discoverq-83c0b.web.app/)
+
+Thank you for reading and have fun with our app!
