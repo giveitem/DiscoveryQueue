@@ -1,5 +1,5 @@
 # DiscoveryQueue
-Contributors: @Janecching, @jessicayujia,  @giveitem, @ouou318
+Team Data-Geeks: @Janecching, @jessicayujia,  @giveitem, @ouou318
 
 ## About
 👋 Hi! 
